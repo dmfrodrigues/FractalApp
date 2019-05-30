@@ -52,8 +52,8 @@ FractalFrame::FractalFrame(FractalBitmap *p):wxFrame(nullptr, wxID_ANY, "Mandelb
 typedef std::chrono::high_resolution_clock hrclock;
 wxThread::ExitCode FractalFrame::Entry(){
     /**Create fractal*/{
-        f->New(FractalBitmap::ComplexNum(FractalBitmap::ComplexT(-1.375),FractalBitmap::ComplexT(0.0L)),
-            FractalHeight*FractalBitmap::ComplexT(1.0L/20.0L/GetSize().y), fpanel->GetSize(), true);
+        f->New(FractalBitmap::ComplexNum(FractalBitmap::ComplexT(-0.75),FractalBitmap::ComplexT(0.0L)),
+            FractalHeight*FractalBitmap::ComplexT(1.0L/0.8L/GetSize().y), fpanel->GetSize(), true);
     }
     while(true){
         ///Update the fractal
