@@ -1,12 +1,11 @@
 #include "FractalFrame.h"
 
 #include "HDPrintscreenDialog.h"
+#include "CURSOR_CROSS.h"
 
 #include <chrono>
 #include <fstream>
 
-///Constants
-const FractalBitmap::IterationT addIt = 200;
 ///Event enumeration
 enum{
     ID_PRINTSCREEN    = 1,
@@ -14,6 +13,9 @@ enum{
 };
 ///Constructor
 FractalFrame::FractalFrame(FractalBitmap *p):wxFrame(nullptr, wxID_ANY, "Mandelbrot set plotter"),f(p){
+    /**Cursor*/{
+        SetCursor(CURSOR_CROSS);
+    }
     /**Menu*/{
         wxMenu* menuFile      = new wxMenu;
         wxMenuItem* menuItem_Printscreen   = new wxMenuItem(menuFile, ID_PRINTSCREEN  , wxT("Save printscreen"));
@@ -58,14 +60,14 @@ wxThread::ExitCode FractalFrame::Entry(){
     while(true){
         ///Update the fractal
         auto t1 = hrclock::now();
-        f->UpdateMath(addIt);
+        f->UpdateMath();
         auto t2 = hrclock::now();
         ///Update the screen
         wxClientDC dc(fpanel);
         dc.DrawBitmap(*((wxBitmap*)f), 0, 0, true);
         ///Update the InfoPanel
         auto dt = std::chrono::duration<long double>(t2-t1);
-        CallAfter(&FractalFrame::UpdateInfoPanel, dt.count()/(long double)addIt);
+        CallAfter(&FractalFrame::UpdateInfoPanel, dt.count()/f->GetTimeUnit());
         ///Process events
         if(!fpanel->is_mouseevt_handled  ){ OnZoomEvent(fpanel->mouseevt);          fpanel->is_mouseevt_handled   = true; }
         if(!fpanel->is_sizeevt_handled   ){ OnSizeEvent();                          fpanel->is_sizeevt_handled    = true; }
@@ -78,7 +80,7 @@ wxThread::ExitCode FractalFrame::Entry(){
 void FractalFrame::UpdateInfoPanel(const long double& secPerIt){
     wxPoint p = wxGetMousePosition() - fpanel->GetScreenPosition();
     FractalBitmap::ComplexNum c = f->GetOrigin() + FractalBitmap::ComplexNum(+(FractalBitmap::ComplexT)p.x*f->GetStep(),-(FractalBitmap::ComplexT)p.y*f->GetStep());
-    ipanel->Update(c, f->GetStep(), f->GetNumIt(), secPerIt, f->GetHorizontalSize());
+    ipanel->Update(c, f->GetStep(), f->GetNum(), secPerIt, f->GetHorizontalSize());
 }
 
 void FractalFrame::OnZoomEvent(const wxMouseEvent& evt){
@@ -117,13 +119,15 @@ void FractalFrame::OnHDPrintscreenEvent(){
     FractalBitmap::ComplexNum center = f->GetCenter();
     FractalBitmap::ComplexT step = f->GetStep();
     wxSize sz = f->GetSize();
-    FractalBitmap::IterationT numIt = f->GetNumIt();
-    HDPrintscreenDialog *dialog = new HDPrintscreenDialog(this, &center, &step, &sz, &numIt);
+    FractalBitmap::IterationT num = f->GetNum();
+    HDPrintscreenDialog *dialog = new HDPrintscreenDialog(this, &center, &step, &sz, &num);
     if(dialog->ShowModal() != wxID_OK) return;
     FractalBitmap *g = f->CreateNew(center, step, sz, true);
 
-    numIt = (numIt/addIt)*addIt + (numIt%addIt? addIt : 0);
-    g->UpdateMath(numIt);
+    num /= g->GetTimeUnit();
+    while(--num){
+        g->UpdateMath();
+    }
     if(g->SaveFile(new_path, wxBITMAP_TYPE_PNG))
         wxLogMessage("Printscreen saved as " + wxString(new_path));
 }
