@@ -22,15 +22,12 @@ private:
 
     FractalBitmap *f;
 
-    void OnZoomEvent(const wxMouseEvent& evt);
+    friend void FractalPanel::OnZoomEvent(wxMouseEvent& evt);
+    void OnZoomEvent(wxMouseEvent& evt);
     void OnSizeEvent();
 
-    bool is_prtscevt_handled = true;
-    void OnPrintscreenCallback(wxCommandEvent& event){ is_prtscevt_handled = false; }
-    void OnPrintscreenEvent();
-    bool is_hdprtscevt_handled = true;
-    void OnHDPrintscreenCallback(wxCommandEvent& event){ is_hdprtscevt_handled = false; }
-    void OnHDPrintscreenEvent();
+    void OnPrintscreenEvent(wxCommandEvent &event);
+    void OnHDPrintscreenEvent(wxCommandEvent &event);
 
     void UpdateInfoPanel(const long double& secPerIt);
 

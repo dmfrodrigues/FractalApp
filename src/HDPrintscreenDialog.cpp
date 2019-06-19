@@ -15,7 +15,7 @@ HDPrintscreenDialog::HDPrintscreenDialog(wxWindow *p, FractalBitmap::ComplexNum 
                    SzXCtrl = new wxTextCtrl  (this, wxID_ANY, std::to_string(sz->x)        , wxDefaultPosition, wxSize( 70,27),  wxALIGN_LEFT);
     wxStaticText*  Sz2Stat = new wxStaticText(this, wxID_ANY,                         " x ", wxDefaultPosition,  wxDefaultSize, wxALIGN_RIGHT);
                    SzYCtrl = new wxTextCtrl  (this, wxID_ANY, std::to_string(sz->y)        , wxDefaultPosition, wxSize( 70,27),  wxALIGN_LEFT);
-    wxStaticText*   ItStat = new wxStaticText(this, wxID_ANY,       "Number of iterations:", wxDefaultPosition,  wxDefaultSize, wxALIGN_RIGHT);
+    wxStaticText*   ItStat = new wxStaticText(this, wxID_ANY,           "Number of cycles:", wxDefaultPosition,  wxDefaultSize, wxALIGN_RIGHT);
                     ItCtrl = new wxTextCtrl  (this, wxID_ANY, std::to_string(*numIt)       , wxDefaultPosition, wxSize(250,27),  wxALIGN_LEFT);
     ///Dimensions sizer
     wxBoxSizer* dimensionsSizer = new wxBoxSizer(wxHORIZONTAL);

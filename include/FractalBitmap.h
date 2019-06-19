@@ -25,7 +25,10 @@
 #define FRACTALBITMAP_H_INCLUDED
 
 #include <complex>
+#include <mutex>
 #include <wx/rawbmp.h>
+
+//#include "mc_float.h"
 
 using namespace std;
 
@@ -41,6 +44,9 @@ public:
      * It is NOT mandatory to overload FractalBitmap::FractalBitmap.
      */
     FractalBitmap();
+
+    std::mutex Mutex;
+
     /**
      * /!\ It IS mandatory to overload FractalBitmap::New.
      * FractalBitmap::New receives parameters, and resets the object using the
@@ -91,7 +97,7 @@ public:
     virtual ComplexT   GetStep()           const = 0;
     virtual IterationT GetNum()            const = 0;
     virtual ComplexT   GetHorizontalSize() const = 0;
-    virtual IterationT GetTimeUnit()       const = 0;
+    virtual IterationT GetCyclesPerRun()   const = 0;
 
     ///STATIC FUNCTIONS ==============================================
     /**

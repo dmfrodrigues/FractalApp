@@ -8,20 +8,16 @@ enum{
 ///Constructor
 FractalPanel::FractalPanel(FractalFrame* p, wxSize s)
     :wxPanel(p, wxID_ANY, wxDefaultPosition, s, wxBORDER_RAISED),
-     parent(p){
+     parent(p),is_sizeevt_handled(true){
     ///Initial settings
     SetCursor(CURSOR_CROSS);
     //popupMenu_ = new wxMenu;
     //popupMenu_->Append(ID_ChangeSettings, "Change settings");
 }
 
+void FractalPanel::OnZoomEvent(wxMouseEvent& evt){ parent->OnZoomEvent(evt); }
+
 BEGIN_EVENT_TABLE(FractalPanel, wxPanel)
-    EVT_MOUSEWHEEL(FractalPanel::OnMouseCallback)
-    EVT_SIZE      (FractalPanel::OnSizeCallback )
-/*
-    EVT_PAINT     (FractalFrame::FractalPanel::OnPaintEvent)
-    EVT_RIGHT_UP  (FractalFrame::FractalPanel::OnRightUp   )
-    EVT_SIZE      (FractalFrame::FractalPanel::OnSizeEvent )
-    EVT_MENU      (ID_ChangeSettings, FractalFrame::FractalPanel::OnChangeSettings)
-*/
+    EVT_MOUSEWHEEL(FractalPanel::OnZoomEvent)
+    EVT_SIZE      (FractalPanel::OnSizeEvent)
 END_EVENT_TABLE()

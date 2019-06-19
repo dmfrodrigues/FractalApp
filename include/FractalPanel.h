@@ -1,6 +1,8 @@
 #ifndef FRACTALPANEL_H_INCLUDED
 #define FRACTALPANEL_H_INCLUDED
 
+#include <atomic>
+
 class FractalFrame;
 
 class FractalPanel: public wxPanel {
@@ -10,10 +12,9 @@ public:
 private:
     FractalFrame    *parent;
 
-    wxMouseEvent mouseevt; bool is_mouseevt_handled = true;
-    void OnMouseCallback(wxMouseEvent& evt){ mouseevt = evt; is_mouseevt_handled = false; };
-    bool is_sizeevt_handled = true;
-    void OnSizeCallback(wxSizeEvent& evt){ is_sizeevt_handled = false; };
+    void OnZoomEvent(wxMouseEvent& evt);
+    std::atomic<bool> is_sizeevt_handled;
+    void OnSizeEvent(wxSizeEvent& evt){ is_sizeevt_handled = false; };
 
     wxDECLARE_EVENT_TABLE();
 };

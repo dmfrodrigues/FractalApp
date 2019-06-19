@@ -1,5 +1,6 @@
 WXLIB  =D:\_ProgrammingLibraries\wxWidgets-3.0.4-new
-IFLAGS =-I$(IDIR) -I$(WXLIB)/include -I$(WXLIB) -I$(WXLIB)/lib/gcc_dll_UNICODE_MONOLITHIC_RELEASE/mswu
+MCAP   =D:\_ProgrammingLibraries\mcap
+IFLAGS =-I$(IDIR) -I$(WXLIB)/include -I$(WXLIB) -I$(WXLIB)/lib/gcc_dll_UNICODE_MONOLITHIC_RELEASE/mswu -I$(MCAP)
 LFLAGS =-L$(WXLIB)/lib/gcc_dll_UNICODE_MONOLITHIC_RELEASE
 
 CC     =g++
