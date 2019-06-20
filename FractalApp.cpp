@@ -2,7 +2,6 @@
 #include "FractalFrame.h"
 #include "Mandelbrot.h"
 
-///MyApp will be our inherited wxApp
 class FractalApp: public wxApp{
 private:
     FractalFrame *fractalFrame;
@@ -10,12 +9,14 @@ private:
 public:
     virtual bool OnInit(){
         wxInitAllImageHandlers();
-        f = new mb();
+        f = new mb(200);
         fractalFrame = new FractalFrame(f);
         fractalFrame->Show(true);
         return true;
     }
+    int OnExit(){
+        if(f!=NULL) delete f;
+    }
 };
-///MACRO - "main" function
-///creates an instance of MyApp and starts the program
+
 wxIMPLEMENT_APP(FractalApp);

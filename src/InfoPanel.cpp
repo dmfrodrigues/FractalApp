@@ -16,7 +16,7 @@ InfoPanel::InfoPanel(FractalFrame* p):wxPanel(p), parent(p){
     StepCtrl               = new wxTextCtrl  (this, wxID_ANY,                 "0.1234567e-123", wxDefaultPosition, wxSize(120,27), wxALIGN_RIGHT);
     StepCtrl               ->SetEditable(false);
 
-    wxStaticText* ItStat   = new wxStaticText(this, wxID_ANY,         "Total no. iterations: ", wxDefaultPosition,  wxDefaultSize, wxALIGN_RIGHT);
+    wxStaticText* ItStat   = new wxStaticText(this, wxID_ANY,             "Total no. cycles: ", wxDefaultPosition,  wxDefaultSize, wxALIGN_RIGHT);
     ItCtrl                 = new wxTextCtrl  (this, wxID_ANY,                         "123456", wxDefaultPosition, wxSize(100,27), wxALIGN_RIGHT);
     ItCtrl                 ->SetEditable(false);
 

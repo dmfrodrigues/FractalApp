@@ -5,6 +5,7 @@ class FractalFrame;
 
 class InfoPanel: public wxPanel {
 friend class FractalFrame;
+friend class FractalPanel;
 private:
     FractalFrame *parent;
     wxTextCtrl *ReCtrl, *ImCtrl, *StepCtrl, *ItCtrl, *TimeCtrl, *DiamCtrl;

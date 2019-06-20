@@ -5,7 +5,7 @@
 
 class FractalFrame;
 
-class FractalPanel: public wxPanel {
+class FractalPanel: public wxPanel, public wxThreadHelper {
 friend class FractalFrame;
 public:
     FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *frac);
@@ -13,9 +13,16 @@ private:
     FractalFrame  *parent;
     FractalBitmap *f;
 
+    std::atomic<double> dt;
+
+    wxThread::ExitCode Entry();
+
     void OnZoomEvent(wxMouseEvent& evt);
     std::atomic<bool> is_sizeevt_handled;
     void OnSizeEvent(wxSizeEvent& evt);
+    void OnPaintEvent(wxPaintEvent& p);
+
+    void UpdateInfoPanel();
 
     wxDECLARE_EVENT_TABLE();
 };

@@ -12,7 +12,7 @@ const FractalBitmap::ComplexT    FractalHeight(2.5L);        ///vertical height 
 
 ///=========================================================
 ///FRACTALFRAME
-class FractalFrame: public wxFrame, public wxThreadHelper {
+class FractalFrame: public wxFrame {
 friend class FractalPanel;
 public:
     FractalFrame(FractalBitmap *p);
@@ -20,20 +20,8 @@ private:
     FractalPanel* fpanel;
     InfoPanel*    ipanel;
 
-    wxThread::ExitCode Entry();
-
-    //FractalBitmap *f;
-
-    std::atomic<double> dt;
-
-    friend void FractalPanel::OnZoomEvent(wxMouseEvent& evt);
-    void OnZoomEvent(wxMouseEvent& evt);
-
     void OnPrintscreenEvent(wxCommandEvent &event);
     void OnHDPrintscreenEvent(wxCommandEvent &event);
-    void OnPaintEvent(wxPaintEvent& p);
-
-    void UpdateInfoPanel();
 
     wxDECLARE_EVENT_TABLE();
 };
