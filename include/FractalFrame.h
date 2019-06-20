@@ -1,6 +1,7 @@
 #ifndef FRACTALFRAME_H_INCLUDED
 #define FRACTALFRAME_H_INCLUDED
 
+#include <atomic>
 #include <wx/wx.h>
 #include "FractalBitmap.h"
 
@@ -12,6 +13,7 @@ const FractalBitmap::ComplexT    FractalHeight(2.5L);        ///vertical height 
 ///=========================================================
 ///FRACTALFRAME
 class FractalFrame: public wxFrame, public wxThreadHelper {
+friend class FractalPanel;
 public:
     FractalFrame(FractalBitmap *p);
 private:
@@ -20,16 +22,18 @@ private:
 
     wxThread::ExitCode Entry();
 
-    FractalBitmap *f;
+    //FractalBitmap *f;
+
+    std::atomic<double> dt;
 
     friend void FractalPanel::OnZoomEvent(wxMouseEvent& evt);
     void OnZoomEvent(wxMouseEvent& evt);
-    void OnSizeEvent();
 
     void OnPrintscreenEvent(wxCommandEvent &event);
     void OnHDPrintscreenEvent(wxCommandEvent &event);
+    void OnPaintEvent(wxPaintEvent& p);
 
-    void UpdateInfoPanel(const long double& secPerIt);
+    void UpdateInfoPanel();
 
     wxDECLARE_EVENT_TABLE();
 };

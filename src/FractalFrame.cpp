@@ -13,7 +13,7 @@ enum{
     ID_HDPRINTSCREEN  = 2
 };
 ///Constructor
-FractalFrame::FractalFrame(FractalBitmap *p):wxFrame(nullptr, wxID_ANY, "Mandelbrot set plotter"),f(p){
+FractalFrame::FractalFrame(FractalBitmap *p):wxFrame(nullptr, wxID_ANY, "Mandelbrot set plotter"){
     /**Cursor*/{
         SetCursor(CURSOR_CROSS);
     }
@@ -29,7 +29,7 @@ FractalFrame::FractalFrame(FractalBitmap *p):wxFrame(nullptr, wxID_ANY, "Mandelb
         this->SetMenuBar(menuBar);
     }
     /**Panels*/{
-        fpanel = new FractalPanel(this, wxSize(1150, 500));
+        fpanel = new FractalPanel(this, wxSize(1150, 500), p);
         ipanel = new InfoPanel   (this);
     }
     /**Background color*/{
@@ -55,56 +55,41 @@ FractalFrame::FractalFrame(FractalBitmap *p):wxFrame(nullptr, wxID_ANY, "Mandelb
 typedef std::chrono::high_resolution_clock hrclock;
 wxThread::ExitCode FractalFrame::Entry(){
     /**Create fractal*/{
-        f->New(FractalBitmap::ComplexNum(FractalBitmap::ComplexT(-0.75),FractalBitmap::ComplexT(0.0L)),
+        fpanel->f->New(FractalBitmap::ComplexNum(FractalBitmap::ComplexT(-0.75),FractalBitmap::ComplexT(0.0L)),
             FractalHeight*FractalBitmap::ComplexT(1.0L/0.8L/GetSize().y), fpanel->GetSize(), true);
     }
-    std::chrono::duration<long double> dt;
-    auto factor = f->GetCyclesPerRun();
     while(true){
         {
-            std::lock_guard<std::mutex> lock(f->Mutex);
-            ///Update the fractal
+            std::lock_guard<std::mutex> lock(fpanel->f->Mutex);
+            ///Update the fractal & measure time
             auto t1 = hrclock::now();
-            f->UpdateMath();
+            fpanel->f->UpdateMath();
             auto t2 = hrclock::now();
-            dt = t2-t1;
-            ///Update the screen
-            wxClientDC dc(fpanel);
-            dc.DrawBitmap(*((wxBitmap*)f), 0, 0, true);
-            factor = f->GetCyclesPerRun();
+            dt = std::chrono::duration<long double>(t2-t1).count();
         }
-        ///Update the InfoPanel
-        CallAfter(&FractalFrame::UpdateInfoPanel, dt.count()/factor);
-        ///Process size event (because it involves a lot of things)
-        if(!fpanel->is_sizeevt_handled   ){ CallAfter(&FractalFrame::OnSizeEvent); fpanel->is_sizeevt_handled    = true; }
+        ///Update the screen
+        wxPaintEvent p;
+        ProcessEvent(p);
     }
     return (wxThread::ExitCode)0;
 }
 
-void FractalFrame::UpdateInfoPanel(const long double& secPerIt){
+void FractalFrame::UpdateInfoPanel(){
     wxPoint p = wxGetMousePosition() - fpanel->GetScreenPosition();
-    FractalBitmap::ComplexNum c = f->GetOrigin() + FractalBitmap::ComplexNum(+(FractalBitmap::ComplexT)p.x*f->GetStep(),-(FractalBitmap::ComplexT)p.y*f->GetStep());
-    ipanel->Update(c, f->GetStep(), f->GetNum(), secPerIt, f->GetHorizontalSize());
+    FractalBitmap::ComplexNum c = fpanel->f->GetOrigin() + FractalBitmap::ComplexNum(+(FractalBitmap::ComplexT)p.x*fpanel->f->GetStep(),-(FractalBitmap::ComplexT)p.y*fpanel->f->GetStep());
+    ipanel->Update(c, fpanel->f->GetStep(), fpanel->f->GetNum(), dt/fpanel->f->GetCyclesPerRun(), fpanel->f->GetHorizontalSize());
 }
 
 void FractalFrame::OnZoomEvent(wxMouseEvent& evt){
-    std::lock_guard<std::mutex> lock(f->Mutex);
+    std::lock_guard<std::mutex> lock(fpanel->f->Mutex);
 
     wxPoint p = wxGetMousePosition() - fpanel->GetScreenPosition();
-    FractalBitmap::ComplexNum newcenter = f->GetOrigin() + FractalBitmap::ComplexNum(
-        FractalBitmap::ComplexT(p.x)*f->GetStep(), FractalBitmap::ComplexT(-p.y)*f->GetStep()
+    FractalBitmap::ComplexNum newcenter = fpanel->f->GetOrigin() + FractalBitmap::ComplexNum(
+        FractalBitmap::ComplexT(p.x)*fpanel->f->GetStep(), FractalBitmap::ComplexT(-p.y)*fpanel->f->GetStep()
     );
-    FractalBitmap::ComplexT newstep = f->GetStep()*FractalBitmap::ComplexT(evt.GetWheelRotation() < 0 ? 3.16227766017L : 1.0L/3.16227766017L);
-    f->New(newcenter, newstep, fpanel->GetSize(), true);
+    FractalBitmap::ComplexT newstep = fpanel->f->GetStep()*FractalBitmap::ComplexT(evt.GetWheelRotation() < 0 ? 3.16227766017L : 1.0L/3.16227766017L);
+    fpanel->f->New(newcenter, newstep, fpanel->GetSize(), true);
 }
-
-void FractalFrame::OnSizeEvent(){
-    std::lock_guard<std::mutex> lock(f->Mutex);
-
-    wxPoint p = wxGetMousePosition() - fpanel->GetScreenPosition();
-    f->New(f->GetCenter(), f->GetStep(), fpanel->GetSize(), true);
-}
-
 
 void NewImageName(const char* format, char* name){
     const unsigned long N = 100000;
@@ -115,26 +100,26 @@ void NewImageName(const char* format, char* name){
     throw std::logic_error("no available names");
 }
 void FractalFrame::OnPrintscreenEvent(wxCommandEvent &event){
-    std::lock_guard<std::mutex> lock(f->Mutex);
+    std::lock_guard<std::mutex> lock(fpanel->f->Mutex);
 
     char new_path[256];
     NewImageName(".\\Printscreens\\Image_%04d.png", new_path);
-    if(f->SaveFile(new_path, wxBITMAP_TYPE_PNG))
+    if(fpanel->f->SaveFile(new_path, wxBITMAP_TYPE_PNG))
         wxLogMessage("Printscreen saved as " + wxString(new_path));
 }
 void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &event){
-    std::lock_guard<std::mutex> lock(f->Mutex);
+    std::lock_guard<std::mutex> lock(fpanel->f->Mutex);
 
     char new_path[256];
     NewImageName(".\\Printscreens\\Image_%04d.png", new_path);
 
-    FractalBitmap::ComplexNum center = f->GetCenter();
-    FractalBitmap::ComplexT step = f->GetStep();
-    wxSize sz = f->GetSize();
-    FractalBitmap::IterationT num = f->GetNum();
+    FractalBitmap::ComplexNum center = fpanel->f->GetCenter();
+    FractalBitmap::ComplexT step = fpanel->f->GetStep();
+    wxSize sz = fpanel->f->GetSize();
+    FractalBitmap::IterationT num = fpanel->f->GetNum();
     HDPrintscreenDialog *dialog = new HDPrintscreenDialog(this, &center, &step, &sz, &num);
     if(dialog->ShowModal() != wxID_OK) return;
-    FractalBitmap *g = f->CreateNew(center, step, sz, true);
+    FractalBitmap *g = fpanel->f->CreateNew(center, step, sz, true);
 
     num /= g->GetCyclesPerRun();
     while(--num){
@@ -144,9 +129,18 @@ void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &event){
         wxLogMessage("Printscreen saved as " + wxString(new_path));
 }
 
+void FractalFrame::OnPaintEvent(wxPaintEvent& p){
+    std::lock_guard<std::mutex> lock(fpanel->f->Mutex);
+    wxClientDC dc(fpanel);
+    dc.DrawBitmap(*((wxBitmap*)(fpanel->f)), 0, 0, true);
+    ///Update the InfoPanel
+    CallAfter(&FractalFrame::UpdateInfoPanel);
+}
+
 ///MACROS - redirect events to functions
 wxBEGIN_EVENT_TABLE(FractalFrame, wxFrame)
     EVT_MOUSEWHEEL(FractalFrame::OnZoomEvent)
     EVT_MENU(ID_PRINTSCREEN  , FractalFrame::OnPrintscreenEvent  )
     EVT_MENU(ID_HDPRINTSCREEN, FractalFrame::OnHDPrintscreenEvent)
+    EVT_PAINT(FractalFrame::OnPaintEvent                         )
 wxEND_EVENT_TABLE()

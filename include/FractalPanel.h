@@ -8,13 +8,14 @@ class FractalFrame;
 class FractalPanel: public wxPanel {
 friend class FractalFrame;
 public:
-    FractalPanel(FractalFrame* p, wxSize s);
+    FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *frac);
 private:
-    FractalFrame    *parent;
+    FractalFrame  *parent;
+    FractalBitmap *f;
 
     void OnZoomEvent(wxMouseEvent& evt);
     std::atomic<bool> is_sizeevt_handled;
-    void OnSizeEvent(wxSizeEvent& evt){ is_sizeevt_handled = false; };
+    void OnSizeEvent(wxSizeEvent& evt);
 
     wxDECLARE_EVENT_TABLE();
 };
