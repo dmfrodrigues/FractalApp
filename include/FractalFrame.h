@@ -14,6 +14,7 @@ const FractalBitmap::ComplexT    FractalHeight(2.5L);        ///vertical height 
 ///FRACTALFRAME
 class FractalFrame: public wxFrame {
 friend class FractalPanel;
+friend class InfoPanel;
 public:
     FractalFrame(FractalBitmap *p);
 private:
@@ -22,6 +23,7 @@ private:
 
     void OnPrintscreenEvent(wxCommandEvent &event);
     void OnHDPrintscreenEvent(wxCommandEvent &event);
+    void OnCloseEvent(wxCloseEvent& evt);
 
     wxDECLARE_EVENT_TABLE();
 };

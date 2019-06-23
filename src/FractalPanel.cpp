@@ -14,10 +14,10 @@ FractalPanel::FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *frac)
     //popupMenu_ = new wxMenu;
     //popupMenu_->Append(ID_ChangeSettings, "Change settings");
     /**Create fractal thread*/{
-        if (CreateThread(wxTHREAD_JOINABLE) != wxTHREAD_NO_ERROR){
+        if(CreateThread(wxTHREAD_JOINABLE) != wxTHREAD_NO_ERROR){
             wxLogError("Could not create main thread"); return;
         }
-        if (GetThread()->Run() != wxTHREAD_NO_ERROR){
+        if(GetThread()->Run() != wxTHREAD_NO_ERROR){
             wxLogError("Could not run main thread"   ); return;
         }
     }
@@ -29,7 +29,7 @@ wxThread::ExitCode FractalPanel::Entry(){
         f->New(FractalBitmap::ComplexNum(FractalBitmap::ComplexT(-0.75),FractalBitmap::ComplexT(0.0L)),
             FractalHeight*FractalBitmap::ComplexT(1.0L/1.06L/GetSize().y), GetSize(), true); //1.0L/0.8L/GetSize().y
     }
-    while(true){
+    while(!GetThread()->TestDestroy()){
         {
             std::lock_guard<std::mutex> lock(f->Mutex);
             ///Update the fractal & measure time
@@ -38,17 +38,10 @@ wxThread::ExitCode FractalPanel::Entry(){
             auto t2 = hrclock::now();
             dt = std::chrono::duration<long double>(t2-t1).count();
         }
-        ///Update the screen
-        wxPaintEvent p;
-        ProcessEvent(p);
+        ///Update screen
+        CallAfter([this]{this->parent->Refresh(false);});
     }
     return (wxThread::ExitCode)0;
-}
-
-void FractalPanel::UpdateInfoPanel(){
-    wxPoint p = wxGetMousePosition() - GetScreenPosition();
-    FractalBitmap::ComplexNum c = f->GetOrigin() + FractalBitmap::ComplexNum(+(FractalBitmap::ComplexT)p.x*f->GetStep(),-(FractalBitmap::ComplexT)p.y*f->GetStep());
-    parent->ipanel->Update(c, f->GetStep(), f->GetNum(), dt/f->GetCyclesPerRun(), f->GetHorizontalSize());
 }
 
 void FractalPanel::OnSizeEvent(wxSizeEvent& evt){
@@ -60,12 +53,9 @@ void FractalPanel::OnSizeEvent(wxSizeEvent& evt){
 };
 
 void FractalPanel::OnPaintEvent(wxPaintEvent& p){
-    std::lock_guard<std::mutex> lock(f->Mutex);
     if(f->GetNum() != 0){
-        wxClientDC dc(this);
+        wxPaintDC dc(this);
         dc.DrawBitmap(*((wxBitmap*)f), 0, 0, true);
-        ///Update the InfoPanel
-        CallAfter(&FractalPanel::UpdateInfoPanel);
     }
 }
 
@@ -83,5 +73,6 @@ void FractalPanel::OnZoomEvent(wxMouseEvent& evt){
 BEGIN_EVENT_TABLE(FractalPanel, wxPanel)
     EVT_MOUSEWHEEL(FractalPanel::OnZoomEvent )
     EVT_SIZE      (FractalPanel::OnSizeEvent )
+    EVT_ERASE_BACKGROUND(FractalPanel::OnEraseEvent)
     EVT_PAINT     (FractalPanel::OnPaintEvent)
 END_EVENT_TABLE()

@@ -27,10 +27,7 @@ InfoPanel::InfoPanel(FractalFrame* p):wxPanel(p), parent(p){
     wxStaticText* DiamStat = new wxStaticText(this, wxID_ANY, "Horizontal size of the image: ", wxDefaultPosition,  wxDefaultSize, wxALIGN_RIGHT);
     DiamCtrl               = new wxTextCtrl  (this, wxID_ANY,               "0.11223344556677", wxDefaultPosition, wxSize(160,27), wxALIGN_RIGHT);
     DiamCtrl               ->SetEditable(false);
-/**
-    "Re(c) = %s; Zoom: %g; Total iterations: %d;\n"             "Time elapsed per iteration: %.12f s"
-    "Im(c) = %s; Horizontal diameter of the image: %g"
-*/
+
     ///Static box sizer (creates rectangle with title)
     wxStaticBoxSizer* StatBoxSizer = new wxStaticBoxSizer(wxVERTICAL, this, "Settings");
     ///1st line
@@ -51,8 +48,15 @@ InfoPanel::InfoPanel(FractalFrame* p):wxPanel(p), parent(p){
     this->SetSizer(StatBoxSizer);
 }
 
-void InfoPanel::Update(const FractalBitmap::ComplexNum& MousePosC, const FractalBitmap::ComplexT& step,
-                       const FractalBitmap::IterationT& numIt    , const long double& secPerIt, const FractalBitmap::ComplexT& W){
+void InfoPanel::OnPaintEvent(wxPaintEvent &evt){
+    auto *f = parent->fpanel->f;
+    wxPoint p = wxGetMousePosition() - GetScreenPosition();
+    FractalBitmap::ComplexNum MousePosC = f->GetOrigin() + FractalBitmap::ComplexNum(+(FractalBitmap::ComplexT)p.x*f->GetStep(),-(FractalBitmap::ComplexT)p.y*f->GetStep());
+    FractalBitmap::ComplexT step = f->GetStep();
+    FractalBitmap::IterationT numIt = f->GetNum();
+    long double secPerIt = parent->fpanel->dt/f->GetCyclesPerRun();
+    FractalBitmap::ComplexT W = f->GetHorizontalSize();
+
     ReCtrl  ->ChangeValue(float2str(MousePosC.real(), 20));
     ImCtrl  ->ChangeValue(float2str(MousePosC.imag(), 20));
     StepCtrl->ChangeValue(float2str(step            ,  4));
@@ -62,4 +66,6 @@ void InfoPanel::Update(const FractalBitmap::ComplexNum& MousePosC, const Fractal
 }
 
 BEGIN_EVENT_TABLE(InfoPanel, wxPanel)
+    EVT_ERASE_BACKGROUND(InfoPanel::OnEraseEvent)
+    EVT_PAINT(InfoPanel::OnPaintEvent)
 END_EVENT_TABLE()

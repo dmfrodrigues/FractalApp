@@ -82,8 +82,14 @@ void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &event){
         wxLogMessage("Printscreen saved as " + wxString(new_path));
 }
 
+void FractalFrame::OnCloseEvent(wxCloseEvent& evt){
+    fpanel->GetThread()->Delete();
+    Destroy();
+}
+
 ///MACROS - redirect events to functions
 wxBEGIN_EVENT_TABLE(FractalFrame, wxFrame)
     EVT_MENU(ID_PRINTSCREEN  , FractalFrame::OnPrintscreenEvent  )
     EVT_MENU(ID_HDPRINTSCREEN, FractalFrame::OnHDPrintscreenEvent)
+    EVT_CLOSE(FractalFrame::OnCloseEvent)
 wxEND_EVENT_TABLE()

@@ -69,7 +69,7 @@ public:
      * @param   IsCenter    true if provided argument `o` is the center of the
                             fractal, false if `o` is the origin.
      */
-    virtual FractalBitmap* CreateNew(ComplexNum o, ComplexT st, wxSize s, bool IsCenter = false) = 0;
+    virtual FractalBitmap* CreateNew(ComplexNum o, ComplexT st, wxSize s, bool IsCenter = false) const = 0;
     /**
      * It is NOT mandatory to overload FractalBitmap::~FractalBitmap.
      * This is a dummy destructor, since FractalBitmap inherits everything from
