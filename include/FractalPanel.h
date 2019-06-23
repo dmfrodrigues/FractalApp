@@ -14,12 +14,12 @@ private:
     FractalFrame  *parent;
     FractalBitmap *f;
 
-    std::atomic<double> dt;
+    wxBitmap bmp;
+    std::mutex bmpMutex;
 
     wxThread::ExitCode Entry();
 
     void OnZoomEvent(wxMouseEvent& evt);
-    std::atomic<bool> is_sizeevt_handled;
     void OnSizeEvent(wxSizeEvent& evt);
     void OnEraseEvent(wxEraseEvent &evt){};
     void OnPaintEvent(wxPaintEvent& p);

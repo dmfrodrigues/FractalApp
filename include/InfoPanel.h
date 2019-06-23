@@ -9,6 +9,15 @@ friend class FractalPanel;
 private:
     FractalFrame *parent;
     wxTextCtrl *ReCtrl, *ImCtrl, *StepCtrl, *ItCtrl, *TimeCtrl, *DiamCtrl;
+
+    std::mutex Mutex;
+
+    FractalBitmap::ComplexNum origin;
+    FractalBitmap::ComplexT step;
+    FractalBitmap::IterationT numIt;
+    long double secPerIt;
+    FractalBitmap::ComplexT horizontalSize;
+
     InfoPanel(FractalFrame *p);
 
     void OnEraseEvent(wxEraseEvent &evt){};

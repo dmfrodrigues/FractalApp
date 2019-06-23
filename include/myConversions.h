@@ -4,28 +4,37 @@
 #include <sstream>
 
 template<class T>
-inline std::string float2str(T n, int no_digits){
-    std::ostringstream convert;
-    convert.flags(std::ios_base::fmtflags::_S_scientific | std::ios_base::fmtflags::_S_showpos);
-    convert.precision(no_digits);
-    convert << n;
-    return convert.str();
+std::string float2str(T n, streamsize no_digits, std::ios_base::fmtflags fmtfl){
+    std::ostringstream oss;
+    oss.flags(fmtfl);
+    oss.precision(no_digits);
+    oss << n;
+    return oss.str();
 }
 
 template<class T>
-inline T str2float(const std::string& in){
+std::string float2str(T n, streamsize no_digits){
+    std::ostringstream oss;
+    oss.precision(no_digits);
+    oss << n;
+    return oss.str();
+}
+
+
+template<class T>
+T ato(const std::string& in){
     T ret;
-    std::istringstream convert(in);
-    //convert.flags();
-    convert >> ret;
+    std::istringstream iss(in);
+    iss >> ret;
     return ret;
 }
 
+/*
 template<class T>
 inline std::string mysprintf(T n, const char* fmt){
     char retBuffer[50];
     sprintf(retBuffer, fmt, n);
     return std::string(retBuffer);
 }
-
+*/
 #endif // MYCONVERSIONS_H_INCLUDED

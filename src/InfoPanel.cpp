@@ -49,20 +49,17 @@ InfoPanel::InfoPanel(FractalFrame* p):wxPanel(p), parent(p){
 }
 
 void InfoPanel::OnPaintEvent(wxPaintEvent &evt){
-    auto *f = parent->fpanel->f;
-    wxPoint p = wxGetMousePosition() - GetScreenPosition();
-    FractalBitmap::ComplexNum MousePosC = f->GetOrigin() + FractalBitmap::ComplexNum(+(FractalBitmap::ComplexT)p.x*f->GetStep(),-(FractalBitmap::ComplexT)p.y*f->GetStep());
-    FractalBitmap::ComplexT step = f->GetStep();
-    FractalBitmap::IterationT numIt = f->GetNum();
-    long double secPerIt = parent->fpanel->dt/f->GetCyclesPerRun();
-    FractalBitmap::ComplexT W = f->GetHorizontalSize();
+    std::lock_guard<std::mutex> lock(Mutex);
 
-    ReCtrl  ->ChangeValue(float2str(MousePosC.real(), 20));
-    ImCtrl  ->ChangeValue(float2str(MousePosC.imag(), 20));
-    StepCtrl->ChangeValue(float2str(step            ,  4));
+    wxPoint p = wxGetMousePosition() - GetScreenPosition();
+    FractalBitmap::ComplexNum MousePosC = origin + FractalBitmap::ComplexNum(+(FractalBitmap::ComplexT)p.x*step,-(FractalBitmap::ComplexT)p.y*step);
+
+    ReCtrl  ->ChangeValue(float2str(MousePosC.real(), 20, std::ios_base::scientific | std::ios_base::showpos));
+    ImCtrl  ->ChangeValue(float2str(MousePosC.imag(), 20, std::ios_base::scientific | std::ios_base::showpos));
+    StepCtrl->ChangeValue(float2str(step            ,  4, std::ios_base::scientific | std::ios_base::showpos));
     ItCtrl  ->ChangeValue(std::to_string(numIt));
-    TimeCtrl->ChangeValue(mysprintf((double) secPerIt, "%.12lf"));
-    DiamCtrl->ChangeValue(mysprintf((double) W       , "%.6lg" ));
+    TimeCtrl->ChangeValue(float2str(secPerIt, 12, std::ios_base::fixed));
+    DiamCtrl->ChangeValue(float2str(horizontalSize, 6));
 }
 
 BEGIN_EVENT_TABLE(InfoPanel, wxPanel)

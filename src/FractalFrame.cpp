@@ -45,34 +45,39 @@ FractalFrame::FractalFrame(FractalBitmap *p):wxFrame(nullptr, wxID_ANY, "Mandelb
 }
 
 void NewImageName(const char* format, char* name){
-    const unsigned long N = 100000;
-    for(unsigned long i = 0; i < N; ++i){
+    const unsigned N = 100000;
+    for(unsigned i = 0; i < N; ++i){
         sprintf(name, format, i);
         if(!std::ifstream(name)) return;
     }
-    throw std::logic_error("no available names");
+    throw std::logic_error("no available image names");
 }
 void FractalFrame::OnPrintscreenEvent(wxCommandEvent &event){
-    std::lock_guard<std::mutex> lock(fpanel->f->Mutex);
-
     char new_path[256];
     NewImageName(".\\Printscreens\\Image_%04d.png", new_path);
-    if(fpanel->f->SaveFile(new_path, wxBITMAP_TYPE_PNG))
-        wxLogMessage("Printscreen saved as " + wxString(new_path));
+    {
+        std::lock_guard<std::mutex> lock(fpanel->f->Mutex);
+        if(fpanel->f->SaveFile(new_path, wxBITMAP_TYPE_PNG))
+            wxLogMessage("Printscreen saved as " + wxString(new_path));
+    }
 }
 void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &event){
-    std::lock_guard<std::mutex> lock(fpanel->f->Mutex);
-
     char new_path[256];
     NewImageName(".\\Printscreens\\Image_%04d.png", new_path);
 
-    FractalBitmap::ComplexNum center = fpanel->f->GetCenter();
-    FractalBitmap::ComplexT step = fpanel->f->GetStep();
-    wxSize sz = fpanel->f->GetSize();
-    FractalBitmap::IterationT num = fpanel->f->GetNum();
-    HDPrintscreenDialog *dialog = new HDPrintscreenDialog(this, &center, &step, &sz, &num);
-    if(dialog->ShowModal() != wxID_OK) return;
-    FractalBitmap *g = fpanel->f->CreateNew(center, step, sz, true);
+    FractalBitmap *g;
+    FractalBitmap::IterationT num;
+    {
+        std::lock_guard<std::mutex> lock(fpanel->f->Mutex);
+
+        FractalBitmap::ComplexNum center = fpanel->f->GetCenter();
+        FractalBitmap::ComplexT step = fpanel->f->GetStep();
+        wxSize sz = fpanel->f->GetSize();
+        num = fpanel->f->GetNum();
+        HDPrintscreenDialog *dialog = new HDPrintscreenDialog(this, &center, &step, &sz, &num);
+        if(dialog->ShowModal() != wxID_OK) return;
+        FractalBitmap *g = fpanel->f->CreateNew(center, step, sz, true);
+    }
 
     num /= g->GetCyclesPerRun();
     while(--num){
