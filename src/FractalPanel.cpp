@@ -56,7 +56,6 @@ wxThread::ExitCode FractalPanel::Entry(){
 void FractalPanel::OnSizeEvent(wxSizeEvent& evt){
     std::lock_guard<std::mutex> lock(f->Mutex);
 
-    wxPoint p = wxGetMousePosition() - this->GetScreenPosition();
     f->New(f->GetCenter(), f->GetStep(), this->GetSize(), true);
 };
 

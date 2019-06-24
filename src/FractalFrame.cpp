@@ -76,7 +76,7 @@ void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &event){
         num = fpanel->f->GetNum();
         HDPrintscreenDialog *dialog = new HDPrintscreenDialog(this, &center, &step, &sz, &num);
         if(dialog->ShowModal() != wxID_OK) return;
-        FractalBitmap *g = fpanel->f->CreateNew(center, step, sz, true);
+        g = fpanel->f->CreateNew(center, step, sz, true);
     }
 
     num /= g->GetCyclesPerRun();
