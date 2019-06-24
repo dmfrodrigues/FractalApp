@@ -1,6 +1,6 @@
-MCAP   =/media/dmfr/DATA/_ProgrammingLibraries/mcap
-IFLAGS =-I$(IDIR) -I$(MCAP)
-LFLAGS =`wx-config --libs`
+GMPARITH=/media/dmfr/DATA/_ProgrammingLibraries/gmp-arith
+IFLAGS =-I$(IDIR) -I$(GMPARITH)
+LFLAGS =`wx-config --libs` -lgmp -lgmpxx
 
 CC     =g++
 

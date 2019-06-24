@@ -13,19 +13,19 @@ InfoPanel::InfoPanel(FractalFrame* p):wxPanel(p), parent(p){
     ImCtrl                 ->SetEditable(false);
 
     wxStaticText* StepStat = new wxStaticText(this, wxID_ANY,                         "Step: ", wxDefaultPosition,  wxDefaultSize, wxALIGN_RIGHT);
-    StepCtrl               = new wxTextCtrl  (this, wxID_ANY,                 "0.1234567e-123", wxDefaultPosition, wxSize(150,27), wxALIGN_RIGHT);
+    StepCtrl               = new wxTextCtrl  (this, wxID_ANY,                 "0.1234567e-123", wxDefaultPosition, wxSize(130,27), wxALIGN_RIGHT);
     StepCtrl               ->SetEditable(false);
 
     wxStaticText* ItStat   = new wxStaticText(this, wxID_ANY,             "Total no. cycles: ", wxDefaultPosition,  wxDefaultSize, wxALIGN_RIGHT);
-    ItCtrl                 = new wxTextCtrl  (this, wxID_ANY,                         "123456", wxDefaultPosition, wxSize(120,27), wxALIGN_RIGHT);
+    ItCtrl                 = new wxTextCtrl  (this, wxID_ANY,                         "123456", wxDefaultPosition, wxSize(110,27), wxALIGN_RIGHT);
     ItCtrl                 ->SetEditable(false);
 
     wxStaticText* TimeStat = new wxStaticText(this, wxID_ANY,   "Time elapsed per cycle (s): ", wxDefaultPosition,  wxDefaultSize, wxALIGN_RIGHT);
-    TimeCtrl               = new wxTextCtrl  (this, wxID_ANY,                 "0.112233445566", wxDefaultPosition, wxSize(150,27), wxALIGN_RIGHT);
+    TimeCtrl               = new wxTextCtrl  (this, wxID_ANY,                 "0.112233445566", wxDefaultPosition, wxSize(160,27), wxALIGN_RIGHT);
     TimeCtrl               ->SetEditable(false);
 
     wxStaticText* DiamStat = new wxStaticText(this, wxID_ANY, "Horizontal size of the image: ", wxDefaultPosition,  wxDefaultSize, wxALIGN_RIGHT);
-    DiamCtrl               = new wxTextCtrl  (this, wxID_ANY,               "0.11223344556677", wxDefaultPosition, wxSize(200,27), wxALIGN_RIGHT);
+    DiamCtrl               = new wxTextCtrl  (this, wxID_ANY,               "0.11223344556677", wxDefaultPosition, wxSize(150,27), wxALIGN_RIGHT);
     DiamCtrl               ->SetEditable(false);
 
     ///Static box sizer (creates rectangle with title)
@@ -51,12 +51,12 @@ InfoPanel::InfoPanel(FractalFrame* p):wxPanel(p), parent(p){
 void InfoPanel::OnPaintEvent(wxPaintEvent &evt){
     std::lock_guard<std::mutex> lock(Mutex);
 
-    wxPoint p = wxGetMousePosition() - GetScreenPosition();
+    wxPoint p = wxGetMousePosition() - parent->fpanel->GetScreenPosition();
     FractalBitmap::ComplexNum MousePosC = origin + FractalBitmap::ComplexNum(+(FractalBitmap::ComplexT)p.x*step,-(FractalBitmap::ComplexT)p.y*step);
 
     ReCtrl  ->ChangeValue(float2str(MousePosC.real(), 20, std::ios_base::scientific | std::ios_base::showpos));
     ImCtrl  ->ChangeValue(float2str(MousePosC.imag(), 20, std::ios_base::scientific | std::ios_base::showpos));
-    StepCtrl->ChangeValue(float2str(step            ,  4, std::ios_base::scientific | std::ios_base::showpos));
+    StepCtrl->ChangeValue(float2str(step            ,  4, std::ios_base::scientific));
     ItCtrl  ->ChangeValue(std::to_string(numIt));
     TimeCtrl->ChangeValue(float2str(secPerIt, 12, std::ios_base::fixed));
     DiamCtrl->ChangeValue(float2str(horizontalSize, 6));
