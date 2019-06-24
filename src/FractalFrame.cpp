@@ -1,7 +1,6 @@
 #include "FractalFrame.h"
 
 #include "HDPrintscreenDialog.h"
-#include "CURSOR_CROSS.h"
 
 #include <chrono>
 #include <fstream>
@@ -14,9 +13,6 @@ enum{
 };
 ///Constructor
 FractalFrame::FractalFrame(FractalBitmap *p):wxFrame(nullptr, wxID_ANY, "Mandelbrot set plotter"){
-    /**Cursor*/{
-        SetCursor(CURSOR_CROSS);
-    }
     /**Menu*/{
         wxMenu* menuFile      = new wxMenu;
         wxMenuItem* menuItem_Printscreen   = new wxMenuItem(menuFile, ID_PRINTSCREEN  , wxT("Save printscreen"));

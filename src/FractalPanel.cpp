@@ -1,5 +1,8 @@
 #include "FractalFrame.h"
-#include "CURSOR_CROSS.h"
+
+#ifdef __WXMSW__
+    #include "CURSOR_CROSS.h"
+#endif
 
 enum{
     ID_ChangeSettings = 1
@@ -10,7 +13,11 @@ FractalPanel::FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *frac)
     :wxPanel(p, wxID_ANY, wxDefaultPosition, s, wxBORDER_RAISED),
      parent(p),f(frac),bmp(1,1,24){
     ///Initial settings
-    SetCursor(CURSOR_CROSS);
+    /**Cursor*/{
+        #ifdef __WXMSW__
+            SetCursor(CURSOR_CROSS);
+        #endif
+    }
     //popupMenu_ = new wxMenu;
     //popupMenu_->Append(ID_ChangeSettings, "Change settings");
     /**Create fractal thread*/{
@@ -22,8 +29,9 @@ FractalPanel::FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *frac)
 typedef std::chrono::high_resolution_clock hrclock;
 wxThread::ExitCode FractalPanel::Entry(){
     /**Create fractal*/{
-        f->New(FractalBitmap::ComplexNum(FractalBitmap::ComplexT(-0.75),FractalBitmap::ComplexT(0.0L)),
-            FractalBitmap::ComplexT(5.0e-3), GetSize(), true);
+        std::lock_guard<std::mutex> lock(f->Mutex);
+        f->New(FractalBitmap::ComplexNum(FractalBitmap::ComplexT(-1.3681),FractalBitmap::ComplexT(0.0L)), //-0.75L,0.0L
+            FractalBitmap::ComplexT(1.5811e-4), GetSize(), true); //5.0e-3
     }
     while(!GetThread()->TestDestroy()){
         {

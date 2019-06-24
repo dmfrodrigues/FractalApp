@@ -72,20 +72,28 @@ static unsigned char uCROSS_mask[] = {
     };
 static char *CROSS_bits = reinterpret_cast<char*>(uCROSS_bits);
 static char *CROSS_mask = reinterpret_cast<char*>(uCROSS_mask);
+#ifdef __WXMSW__
 wxCursor CreateCURSOR_CROSS(){
     wxInitAllImageHandlers();
-    #ifdef __WXMSW__
-        wxBitmap CROSS_bitmap(CROSS_bits, 32, 32);
-        wxBitmap CROSS_mask_bitmap(CROSS_mask, 32, 32);
-        CROSS_bitmap.SetMask(new wxMask(CROSS_mask_bitmap));
-        wxImage CROSS_image = CROSS_bitmap.ConvertToImage();
-        CROSS_image.SetOption(wxIMAGE_OPTION_CUR_HOTSPOT_X, 15);
-        CROSS_image.SetOption(wxIMAGE_OPTION_CUR_HOTSPOT_Y, 15); CROSS_image.SaveFile("CROSS_CURSOR.png", wxBITMAP_TYPE_PNG);
-        wxCursor CROSS_cursor = wxCursor(CROSS_image);
-    #elif defined(__WXGTK__) or defined(__WXMOTIF__)
-        wxCursor CROSS_cursor = wxCursor(CROSS_bits, 32, 32, 6, 14,
-                                        CROSS_mask, wxWHITE, wxBLACK);
-    #endif
+    wxBitmap CROSS_bitmap(CROSS_bits, 32, 32);
+    wxBitmap CROSS_mask_bitmap(CROSS_mask, 32, 32);
+    CROSS_bitmap.SetMask(new wxMask(CROSS_mask_bitmap));
+    wxImage CROSS_image = CROSS_bitmap.ConvertToImage();
+    CROSS_image.SetOption(wxIMAGE_OPTION_CUR_HOTSPOT_X, 15);
+    CROSS_image.SetOption(wxIMAGE_OPTION_CUR_HOTSPOT_Y, 15);
+    wxCursor CROSS_cursor = wxCursor(CROSS_image);
     return CROSS_cursor;
 }
 const wxCursor CURSOR_CROSS = CreateCURSOR_CROSS();
+#endif
+#if defined(__WXGTK__) or defined(__WXMOTIF__)
+/*
+wxCursor CreateCURSOR_CROSS(){
+    wxInitAllImageHandlers();
+        wxCursor CROSS_cursor = wxCursor(CROSS_bits, 32, 32, 6, 14,
+                                        CROSS_mask, wxWHITE, wxBLACK);
+
+    return CROSS_cursor;
+}
+*/
+#endif
