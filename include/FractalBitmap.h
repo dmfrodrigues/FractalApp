@@ -28,14 +28,14 @@
 #include <mutex>
 #include <wx/rawbmp.h>
 
-//#include "mc_float.h"
+#include "mc_float.h"
 
 using namespace std;
 
 class FractalBitmap: public wxBitmap{
 public:
     ///PUBLIC TYPEDEFS
-    typedef long double ComplexT;
+    typedef mc_float<2> ComplexT;
     typedef unsigned long long IterationT;
     typedef std::complex<ComplexT> ComplexNum;
 
