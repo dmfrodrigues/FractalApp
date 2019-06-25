@@ -13,7 +13,7 @@
  * FractalBitmap must not be used directly, but rather overloaded to correspond
  * to the user's needs.
  *
- * Currently, this class uses `long double` as fundamental floating type
+ * Currently, this class uses `gaf<128>` as fundamental floating type
  * (`ComplexT`), and `std::complex<ComplexT>` as fundamental complex type
  * (`ComplexNum`).
  * /!\ BEWARE THAT `std::complex` IS VERY SLOW if compiled with default options.
@@ -35,7 +35,7 @@ using namespace std;
 class FractalBitmap: public wxBitmap{
 public:
     ///PUBLIC TYPEDEFS
-    typedef gaf<32> ComplexT;
+    typedef gaf<128> ComplexT;
     typedef unsigned long long IterationT;
     typedef std::complex<ComplexT> ComplexNum;
 
