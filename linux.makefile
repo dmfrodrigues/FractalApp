@@ -1,4 +1,4 @@
-MCAP=/media/dmfr/DATA/_ProgrammingLibraries/mcap
+MCAP=/media/DATA/dmfro/projects/mcap
 IFLAGS =-I$(IDIR) -I$(MCAP)
 LFLAGS =`wx-config --libs`
 

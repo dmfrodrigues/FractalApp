@@ -35,7 +35,7 @@ using namespace std;
 class FractalBitmap: public wxBitmap{
 public:
     ///PUBLIC TYPEDEFS
-    typedef mc_float<2> ComplexT;
+    typedef mc_float<4> ComplexT;
     typedef unsigned long long IterationT;
     typedef std::complex<ComplexT> ComplexNum;
 
