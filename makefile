@@ -23,3 +23,7 @@ $(LDIR)/libfractalapp.a: $(ODIR)/FractalBitmap.o $(ODIR)/CURSOR_CROSS.o $(ODIR)/
 
 $(ODIR)/%.o: $(SDIR)/%.cpp
 	$(CC) $(CFLAGS) $^ -o $@
+
+clean:
+	rm -rf obj
+	rm -rf lib
