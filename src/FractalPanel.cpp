@@ -30,8 +30,8 @@ typedef std::chrono::high_resolution_clock hrclock;
 wxThread::ExitCode FractalPanel::Entry(){
     /**Create fractal*/{
         std::lock_guard<std::mutex> lock(f->Mutex);
-        f->New(FractalBitmap::ComplexNum(FractalBitmap::ComplexT(-1.3681L),FractalBitmap::ComplexT(0.0L)), //-0.75L,0.0L
-            FractalBitmap::ComplexT(1.5811e-4), GetSize(), true); //5.0e-3
+        f->New(FractalBitmap::ComplexNum(FractalBitmap::ComplexT(-0.75L),FractalBitmap::ComplexT(0.0L)), //-0.75L,0.0L
+            FractalBitmap::ComplexT(5.0e-3), GetSize(), true); //5.0e-3
     }
     while(!GetThread()->TestDestroy()){
         {
