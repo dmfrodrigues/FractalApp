@@ -44,23 +44,24 @@ using namespace std;
 
 class FractalBitmap: public wxBitmap{
 public:
-    ///PUBLIC TYPEDEFS
+    // PUBLIC TYPEDEFS
     typedef long double complex_t;
     typedef unsigned long long iter_t;
     typedef std::complex<complex_t> ComplexNum;
 private:
-    ComplexNum          origin; ///Upper-left corner
-    complex_t           step;   ///Difference between consecutive pixels
+    /// Origin of the screen (upper-left corner) in complex coordinate units.
+    ComplexNum          origin;
+    /// Step between consecutive pixels.
+    complex_t           step;
 public:
     /**
-     * It is NOT mandatory to overload FractalBitmap::FractalBitmap.
+     * @brief Construct a new Fractal Bitmap object without arguments.
      */
     FractalBitmap();
 
     std::mutex Mutex;
 
     /**
-     * /!\ It IS mandatory to overload FractalBitmap::reset.
      * FractalBitmap::reset receives parameters, and resets the object using the
      * arguments to start calculations from the beginning.
      * @param   o           origin (or center) of the fractal
@@ -71,7 +72,6 @@ public:
      */
     virtual void reset(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) = 0;
     /**
-     * /!\ It IS mandatory to overload FractalBitmap::clone.
      * FractalBitmap::clone receives the same parameters as
      * FractalBitmap::reset. It creates a new object in the heap, runs reset on it,
      * and returns the pointer to the new object
@@ -82,40 +82,51 @@ public:
                             fractal, false if `o` is the origin.
      */
     virtual FractalBitmap* clone(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) const = 0;
+    
+    // CALCULATIONS ==================================================
     /**
-     * It is NOT mandatory to overload FractalBitmap::~FractalBitmap.
-     * This is a dummy destructor, since FractalBitmap inherits everything from
-     * wxBitmap (thus inheriting its destructor), while only adding functions,
-     * not variables.
-     */
-    ~FractalBitmap(){};
-
-    ///CALCULATIONS ==================================================
-    /**
-     * /!\ It IS mandatory to overload FractalBitmap::UpdateMath.
      * Make calculations, and update pixels accordingly. This is the most
      * important function of the class.
      */
     virtual void UpdateMath() = 0;
 
-    ///GET FUNCTIONS =================================================
+    // GET FUNCTIONS =================================================
     /**
-     * /!\ It IS mandatory to overload the GET functions.
-     * Provide information to the outside world, so the panels' information can
-     * be updated
+     * @brief Get the origin (top-left corner) complex coordinates.
+     * 
+     * @return ComplexNum Origin
      */
     virtual ComplexNum  GetOrigin()                 const final;
+    /**
+     * @brief Set the origin (top-left corner) complex coordinates.
+     * 
+     * @param orig New origin value
+     */
     virtual void        SetOrigin(const ComplexNum &orig) final;
+    /**
+     * @brief Get the center of the screen in complex coordinates.
+     * 
+     * @return ComplexNum Center
+     */
     virtual ComplexNum  GetCenter()                 const final;
-    virtual complex_t   GetStep()               const final;
-    virtual void        SetStep(const complex_t &stp) final;
+    /**
+     * @brief Get the step (in complex coordinate units) between consecutive pixels.
+     * 
+     * @return complex_t Step
+     */
+    virtual complex_t   GetStep()                   const final;
+    /**
+     * @brief Set the step between consecutive pixels.
+     * 
+     * @param stp New step value
+     */
+    virtual void        SetStep(const complex_t &stp)     final;
     virtual iter_t GetNum()            const = 0;
     virtual complex_t   GetHorizontalSize() const final;
     virtual iter_t GetCyclesPerRun()   const = 0;
 
-    ///STATIC FUNCTIONS ==============================================
+    // STATIC FUNCTIONS ==============================================
     /**
-     * /!\ These functions should NOT be overloaded.
      * Get origin of fractal from the provided center in a fractal with step
      * `st` and size `s`, and vice-versa
      */
