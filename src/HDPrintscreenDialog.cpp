@@ -2,7 +2,7 @@
 #include "myConversions.h"
 
 ///Constructor
-HDPrintscreenDialog::HDPrintscreenDialog(wxWindow *p, FractalBitmap::ComplexNum *c, FractalBitmap::complex_t *z, wxSize *s, FractalBitmap::IterationT *it)
+HDPrintscreenDialog::HDPrintscreenDialog(wxWindow *p, FractalBitmap::ComplexNum *c, FractalBitmap::complex_t *z, wxSize *s, FractalBitmap::iter_t *it)
     :wxDialog(p, wxID_ANY, "Set printscreen settings"), center(c), step(z), sz(s), numIt(it){
     ///Text
     wxStaticText*   ReStat = new wxStaticText(this, wxID_ANY,                  "Real part:", wxDefaultPosition,  wxDefaultSize, wxALIGN_RIGHT);
@@ -52,7 +52,7 @@ void HDPrintscreenDialog::OnOK(wxCommandEvent&){
     *step   =        ato<FractalBitmap::complex_t>(StepCtrl->GetValue().ToStdString());
     *sz     = wxSize(std::stoi(SzXCtrl->GetValue().ToStdString()),
                      std::stoi(SzYCtrl->GetValue().ToStdString()));
-    *numIt  =        ato<FractalBitmap::IterationT>(ItCtrl->GetValue().ToStdString());
+    *numIt  =        ato<FractalBitmap::iter_t>(ItCtrl->GetValue().ToStdString());
     this->SetReturnCode(wxID_OK);
     this->Destroy();
 }

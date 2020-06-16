@@ -46,7 +46,7 @@ class FractalBitmap: public wxBitmap{
 public:
     ///PUBLIC TYPEDEFS
     typedef long double complex_t;
-    typedef unsigned long long IterationT;
+    typedef unsigned long long iter_t;
     typedef std::complex<complex_t> ComplexNum;
 private:
     ComplexNum          origin; ///Upper-left corner
@@ -109,9 +109,9 @@ public:
     virtual ComplexNum  GetCenter()                 const final;
     virtual complex_t   GetStep()               const final;
     virtual void        SetStep(const complex_t &stp) final;
-    virtual IterationT GetNum()            const = 0;
+    virtual iter_t GetNum()            const = 0;
     virtual complex_t   GetHorizontalSize() const final;
-    virtual IterationT GetCyclesPerRun()   const = 0;
+    virtual iter_t GetCyclesPerRun()   const = 0;
 
     ///STATIC FUNCTIONS ==============================================
     /**

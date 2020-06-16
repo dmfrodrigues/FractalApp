@@ -62,7 +62,7 @@ void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &){
     NewImageName(".\\Printscreens\\Image_%04d.png", new_path);
 
     FractalBitmap *g;
-    FractalBitmap::IterationT num;
+    FractalBitmap::iter_t num;
     {
         std::lock_guard<std::mutex> lock(fpanel->f->Mutex);
 
