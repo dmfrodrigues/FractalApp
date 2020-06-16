@@ -48,7 +48,8 @@ public:
     typedef long double complex_t;
     typedef unsigned long long IterationT;
     typedef std::complex<complex_t> ComplexNum;
-
+private:
+    ComplexNum          origin; ///Upper-left corner
 public:
     /**
      * It is NOT mandatory to overload FractalBitmap::FractalBitmap.
@@ -102,8 +103,10 @@ public:
      * Provide information to the outside world, so the panels' information can
      * be updated
      */
-    virtual ComplexNum GetOrigin()         const = 0;
-    virtual ComplexNum GetCenter()         const = 0;
+    virtual ComplexNum GetOrigin()                 const final { return origin; }
+    virtual void       SetOrigin(const ComplexNum &orig) final { this->origin = orig; }
+    virtual ComplexNum GetCenter()                 const final { return GetCenterFromOrigin(GetOrigin(), GetStep(), GetSize()); }
+    
     virtual complex_t   GetStep()           const = 0;
     virtual IterationT GetNum()            const = 0;
     virtual complex_t   GetHorizontalSize() const final;
