@@ -13,10 +13,10 @@ private:
     std::mutex Mutex;
 
     FractalBitmap::ComplexNum origin;
-    FractalBitmap::ComplexT step;
+    FractalBitmap::complex_t step;
     FractalBitmap::IterationT numIt;
     long double secPerIt;
-    FractalBitmap::ComplexT horizontalSize;
+    FractalBitmap::complex_t horizontalSize;
 
     InfoPanel(FractalFrame *p);
 

@@ -14,7 +14,7 @@
  * to the user's needs.
  *
  * Currently, this class uses `long double` as fundamental floating type
- * (`ComplexT`), and `std::complex<ComplexT>` as fundamental complex type
+ * (`complex_t`), and `std::complex<complex_t>` as fundamental complex type
  * (`ComplexNum`).
  * /!\ BEWARE THAT `std::complex` IS VERY SLOW if compiled with default options.
  * To make `std::complex` calculations decently fast, compile FractalBitmap.cpp
@@ -35,9 +35,9 @@ using namespace std;
 class FractalBitmap: public wxBitmap{
 public:
     ///PUBLIC TYPEDEFS
-    typedef long double ComplexT;
+    typedef long double complex_t;
     typedef unsigned long long IterationT;
-    typedef std::complex<ComplexT> ComplexNum;
+    typedef std::complex<complex_t> ComplexNum;
 
 public:
     /**
@@ -48,8 +48,8 @@ public:
     std::mutex Mutex;
 
     /**
-     * /!\ It IS mandatory to overload FractalBitmap::New.
-     * FractalBitmap::New receives parameters, and resets the object using the
+     * /!\ It IS mandatory to overload FractalBitmap::reset.
+     * FractalBitmap::reset receives parameters, and resets the object using the
      * arguments to start calculations from the beginning.
      * @param   o           origin (or center) of the fractal
      * @param   st          step (distance between two consecutive pixels)
@@ -57,11 +57,11 @@ public:
      * @param   IsCenter    true if provided argument `o` is the center of the
                             fractal, false if `o` is the origin.
      */
-    virtual void New(ComplexNum o, ComplexT st, wxSize s, bool IsCenter = false) = 0;
+    virtual void reset(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) = 0;
     /**
-     * /!\ It IS mandatory to overload FractalBitmap::CreateNew.
-     * FractalBitmap::CreateNew receives the same parameters as
-     * FractalBitmap::New. It creates a new object in the heap, runs New on it,
+     * /!\ It IS mandatory to overload FractalBitmap::clone.
+     * FractalBitmap::clone receives the same parameters as
+     * FractalBitmap::reset. It creates a new object in the heap, runs reset on it,
      * and returns the pointer to the new object
      * @param   o           origin (or center) of the fractal
      * @param   st          step (distance between two consecutive pixels)
@@ -69,7 +69,7 @@ public:
      * @param   IsCenter    true if provided argument `o` is the center of the
                             fractal, false if `o` is the origin.
      */
-    virtual FractalBitmap* CreateNew(ComplexNum o, ComplexT st, wxSize s, bool IsCenter = false) const = 0;
+    virtual FractalBitmap* clone(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) const = 0;
     /**
      * It is NOT mandatory to overload FractalBitmap::~FractalBitmap.
      * This is a dummy destructor, since FractalBitmap inherits everything from
@@ -94,9 +94,9 @@ public:
      */
     virtual ComplexNum GetOrigin()         const = 0;
     virtual ComplexNum GetCenter()         const = 0;
-    virtual ComplexT   GetStep()           const = 0;
+    virtual complex_t   GetStep()           const = 0;
     virtual IterationT GetNum()            const = 0;
-    virtual ComplexT   GetHorizontalSize() const = 0;
+    virtual complex_t   GetHorizontalSize() const = 0;
     virtual IterationT GetCyclesPerRun()   const = 0;
 
     ///STATIC FUNCTIONS ==============================================
@@ -105,8 +105,8 @@ public:
      * Get origin of fractal from the provided center in a fractal with step
      * `st` and size `s`, and vice-versa
      */
-    static ComplexNum GetOriginFromCenter(ComplexNum cent, ComplexT st, wxSize s);
-    static ComplexNum GetCenterFromOrigin(ComplexNum orig, ComplexT st, wxSize s);
+    static ComplexNum GetOriginFromCenter(ComplexNum cent, complex_t st, wxSize s);
+    static ComplexNum GetCenterFromOrigin(ComplexNum orig, complex_t st, wxSize s);
 
 };
 

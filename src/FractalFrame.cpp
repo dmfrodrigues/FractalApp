@@ -67,12 +67,12 @@ void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &event){
         std::lock_guard<std::mutex> lock(fpanel->f->Mutex);
 
         FractalBitmap::ComplexNum center = fpanel->f->GetCenter();
-        FractalBitmap::ComplexT step = fpanel->f->GetStep();
+        FractalBitmap::complex_t step = fpanel->f->GetStep();
         wxSize sz = fpanel->f->GetSize();
         num = fpanel->f->GetNum();
         HDPrintscreenDialog *dialog = new HDPrintscreenDialog(this, &center, &step, &sz, &num);
         if(dialog->ShowModal() != wxID_OK) return;
-        g = fpanel->f->CreateNew(center, step, sz, true);
+        g = fpanel->f->clone(center, step, sz, true);
     }
 
     num /= g->GetCyclesPerRun();

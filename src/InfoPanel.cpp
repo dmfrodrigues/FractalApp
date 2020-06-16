@@ -52,7 +52,7 @@ void InfoPanel::OnPaintEvent(wxPaintEvent &evt){
     std::lock_guard<std::mutex> lock(Mutex);
 
     wxPoint p = wxGetMousePosition() - parent->fpanel->GetScreenPosition();
-    FractalBitmap::ComplexNum MousePosC = origin + FractalBitmap::ComplexNum(+(FractalBitmap::ComplexT)p.x*step,-(FractalBitmap::ComplexT)p.y*step);
+    FractalBitmap::ComplexNum MousePosC = origin + FractalBitmap::ComplexNum(+(FractalBitmap::complex_t)p.x*step,-(FractalBitmap::complex_t)p.y*step);
 
     ReCtrl  ->ChangeValue(float2str(MousePosC.real(), 20, std::ios_base::scientific | std::ios_base::showpos));
     ImCtrl  ->ChangeValue(float2str(MousePosC.imag(), 20, std::ios_base::scientific | std::ios_base::showpos));

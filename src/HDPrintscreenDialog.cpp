@@ -2,7 +2,7 @@
 #include "myConversions.h"
 
 ///Constructor
-HDPrintscreenDialog::HDPrintscreenDialog(wxWindow *p, FractalBitmap::ComplexNum *c, FractalBitmap::ComplexT *z, wxSize *s, FractalBitmap::IterationT *it)
+HDPrintscreenDialog::HDPrintscreenDialog(wxWindow *p, FractalBitmap::ComplexNum *c, FractalBitmap::complex_t *z, wxSize *s, FractalBitmap::IterationT *it)
     :wxDialog(p, wxID_ANY, "Set printscreen settings"), center(c), step(z), sz(s), numIt(it){
     ///Text
     wxStaticText*   ReStat = new wxStaticText(this, wxID_ANY,                  "Real part:", wxDefaultPosition,  wxDefaultSize, wxALIGN_RIGHT);
@@ -47,9 +47,9 @@ HDPrintscreenDialog::HDPrintscreenDialog(wxWindow *p, FractalBitmap::ComplexNum 
     this->SetSizer(globalSizer);
 }
 void HDPrintscreenDialog::OnOK(wxCommandEvent& event){
-    *center = FractalBitmap::ComplexNum(ato<FractalBitmap::ComplexT>(ReCtrl->GetValue().ToStdString()),
-                                        ato<FractalBitmap::ComplexT>(ImCtrl->GetValue().ToStdString()));
-    *step   =        ato<FractalBitmap::ComplexT>(StepCtrl->GetValue().ToStdString());
+    *center = FractalBitmap::ComplexNum(ato<FractalBitmap::complex_t>(ReCtrl->GetValue().ToStdString()),
+                                        ato<FractalBitmap::complex_t>(ImCtrl->GetValue().ToStdString()));
+    *step   =        ato<FractalBitmap::complex_t>(StepCtrl->GetValue().ToStdString());
     *sz     = wxSize(std::stoi(SzXCtrl->GetValue().ToStdString()),
                      std::stoi(SzYCtrl->GetValue().ToStdString()));
     *numIt  =        ato<FractalBitmap::IterationT>(ItCtrl->GetValue().ToStdString());

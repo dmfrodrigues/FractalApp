@@ -6,13 +6,13 @@
 
 class HDPrintscreenDialog: public wxDialog {
 public:
-    HDPrintscreenDialog(wxWindow *p, FractalBitmap::ComplexNum *c, FractalBitmap::ComplexT *z, wxSize *s, FractalBitmap::IterationT *it);
+    HDPrintscreenDialog(wxWindow *p, FractalBitmap::ComplexNum *c, FractalBitmap::complex_t *z, wxSize *s, FractalBitmap::IterationT *it);
 private:
     ///================================
     ///VARIABLES
     wxTextCtrl *ReCtrl, *ImCtrl, *StepCtrl, *SzXCtrl, *SzYCtrl, *ItCtrl;
     FractalBitmap::ComplexNum *center;
-    FractalBitmap::ComplexT *step;
+    FractalBitmap::complex_t *step;
     wxSize *sz;
     FractalBitmap::IterationT* numIt;
     ///================================

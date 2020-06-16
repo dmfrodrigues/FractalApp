@@ -30,8 +30,8 @@ typedef std::chrono::high_resolution_clock hrclock;
 wxThread::ExitCode FractalPanel::Entry(){
     /**Create fractal*/{
         std::lock_guard<std::mutex> lock(f->Mutex);
-        f->New(FractalBitmap::ComplexNum(FractalBitmap::ComplexT(-0.75L),FractalBitmap::ComplexT(0.0L)), //-0.75L,0.0L
-            FractalBitmap::ComplexT(5.0e-3), GetSize(), true); //5.0e-3
+        f->reset(FractalBitmap::ComplexNum(FractalBitmap::complex_t(-0.75L),FractalBitmap::complex_t(0.0L)), //-0.75L,0.0L
+            FractalBitmap::complex_t(5.0e-3), GetSize(), true); //5.0e-3
     }
     while(!GetThread()->TestDestroy()){
         {
@@ -64,7 +64,7 @@ wxThread::ExitCode FractalPanel::Entry(){
 void FractalPanel::OnSizeEvent(wxSizeEvent& evt){
     std::lock_guard<std::mutex> lock(f->Mutex);
 
-    f->New(f->GetCenter(), f->GetStep(), this->GetSize(), true);
+    f->reset(f->GetCenter(), f->GetStep(), this->GetSize(), true);
 };
 
 void FractalPanel::OnPaintEvent(wxPaintEvent& p){
@@ -79,10 +79,10 @@ void FractalPanel::OnZoomEvent(wxMouseEvent& evt){
 
     wxPoint p = wxGetMousePosition() - GetScreenPosition();
     FractalBitmap::ComplexNum newcenter = f->GetOrigin() + FractalBitmap::ComplexNum(
-        FractalBitmap::ComplexT(p.x)*f->GetStep(), FractalBitmap::ComplexT(-p.y)*f->GetStep()
+        FractalBitmap::complex_t(p.x)*f->GetStep(), FractalBitmap::complex_t(-p.y)*f->GetStep()
     );
-    FractalBitmap::ComplexT newstep = f->GetStep()*FractalBitmap::ComplexT(evt.GetWheelRotation() < 0 ? 3.16227766017L : 1.0L/3.16227766017L);
-    f->New(newcenter, newstep, GetSize(), true);
+    FractalBitmap::complex_t newstep = f->GetStep()*FractalBitmap::complex_t(evt.GetWheelRotation() < 0 ? 3.16227766017L : 1.0L/3.16227766017L);
+    f->reset(newcenter, newstep, GetSize(), true);
 }
 
 BEGIN_EVENT_TABLE(FractalPanel, wxPanel)
