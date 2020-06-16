@@ -36,35 +36,55 @@ class FractalBitmap: public wxBitmap{
 public:
     ///PUBLIC TYPEDEFS
     typedef long double complex_t;
-    typedef unsigned long long iter_t;
+    typedef unsigned long long IterationT;
     typedef std::complex<complex_t> ComplexNum;
 
 public:
+    /**
+     * It is NOT mandatory to overload FractalBitmap::FractalBitmap.
+     */
+    FractalBitmap();
 
     std::mutex Mutex;
 
     /**
-     * @brief Initializes the object using the arguments to start calculations from the beginning.
-     * 
+     * /!\ It IS mandatory to overload FractalBitmap::reset.
+     * FractalBitmap::reset receives parameters, and resets the object using the
+     * arguments to start calculations from the beginning.
      * @param   o           origin (or center) of the fractal
      * @param   st          step (distance between two consecutive pixels)
      * @param   s           size of the fractal in pixels (width, height)
      * @param   IsCenter    true if provided argument `o` is the center of the
                             fractal, false if `o` is the origin.
      */
-    virtual void init(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) = 0;
+    virtual void reset(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) = 0;
     /**
-     * @brief Clones object and returns pointer. Must be freed by the caller.
-     * 
-     * @return FractalBitmap* 
+     * /!\ It IS mandatory to overload FractalBitmap::clone.
+     * FractalBitmap::clone receives the same parameters as
+     * FractalBitmap::reset. It creates a new object in the heap, runs reset on it,
+     * and returns the pointer to the new object
+     * @param   o           origin (or center) of the fractal
+     * @param   st          step (distance between two consecutive pixels)
+     * @param   s           size of the fractal in pixels (width, height)
+     * @param   IsCenter    true if provided argument `o` is the center of the
+                            fractal, false if `o` is the origin.
      */
-    virtual FractalBitmap* clone() const = 0;
+    virtual FractalBitmap* clone(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) const = 0;
+    /**
+     * It is NOT mandatory to overload FractalBitmap::~FractalBitmap.
+     * This is a dummy destructor, since FractalBitmap inherits everything from
+     * wxBitmap (thus inheriting its destructor), while only adding functions,
+     * not variables.
+     */
+    ~FractalBitmap(){};
 
     ///CALCULATIONS ==================================================
     /**
-     * @brief Make calculations, and update pixels accordingly.
+     * /!\ It IS mandatory to overload FractalBitmap::UpdateMath.
+     * Make calculations, and update pixels accordingly. This is the most
+     * important function of the class.
      */
-    virtual void update() = 0;
+    virtual void UpdateMath() = 0;
 
     ///GET FUNCTIONS =================================================
     /**
@@ -72,12 +92,12 @@ public:
      * Provide information to the outside world, so the panels' information can
      * be updated
      */
-    virtual ComplexNum getOrigin()         const = 0;
-    virtual ComplexNum getCenter()         const = 0;
-    virtual complex_t   getStep()           const = 0;
-    virtual iter_t getNum()            const = 0;
+    virtual ComplexNum GetOrigin()         const = 0;
+    virtual ComplexNum GetCenter()         const = 0;
+    virtual complex_t   GetStep()           const = 0;
+    virtual IterationT GetNum()            const = 0;
     virtual complex_t   GetHorizontalSize() const = 0;
-    virtual iter_t GetCyclesPerRun()   const = 0;
+    virtual IterationT GetCyclesPerRun()   const = 0;
 
     ///STATIC FUNCTIONS ==============================================
     /**
@@ -87,6 +107,7 @@ public:
      */
     static ComplexNum GetOriginFromCenter(ComplexNum cent, complex_t st, wxSize s);
     static ComplexNum GetCenterFromOrigin(ComplexNum orig, complex_t st, wxSize s);
+
 };
 
 #endif // FRACTALBITMAP_H_INCLUDED
