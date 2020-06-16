@@ -12,6 +12,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Install wxWidgets
+      run: sudo apt install -y libwxgtk3.0-dev
+
     - name: Checkout submodules
       shell: bash
       run: |
