@@ -2,6 +2,19 @@
 
 FractalBitmap::FractalBitmap():wxBitmap(1,1,24){}
 
+void FractalBitmap::Create(FractalBitmap::ComplexNum o, FractalBitmap::complex_t st, wxSize s, bool IsCenter){
+    wxBitmap::Create(s, 24);
+    wxNativePixelData px(*((wxBitmap*)this));
+    const unsigned N = GetWidth()*GetHeight();
+    wxNativePixelData::Iterator p = px.GetPixels();
+    for(unsigned i = 0; i < N; ++i, ++p){
+        p.Red() = p.Green() = p.Blue() = 0;
+    }
+
+    SetStep(st);
+    if(IsCenter) SetCenter(o); else SetOrigin(o);
+}
+
 FractalBitmap::ComplexNum FractalBitmap::GetOrigin() const {
     return origin;
 }

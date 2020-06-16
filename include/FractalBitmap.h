@@ -68,7 +68,7 @@ public:
      * @param   IsCenter    true if provided argument `o` is the center of the
                             fractal, false if `o` is the origin.
      */
-    virtual void Create(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) = 0;
+    virtual void Create(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false);
     /**
      * FractalBitmap::Clone receives the same parameters as
      * FractalBitmap::Create. It creates a new object in the heap, runs Create on it,
