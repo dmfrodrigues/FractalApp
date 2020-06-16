@@ -43,11 +43,11 @@ wxThread::ExitCode FractalPanel::Entry(){
             auto dt = std::chrono::duration<long double>(t2-t1).count();
             /**Update values in ipanel for showing*/{
                 std::lock_guard<std::mutex> lock2(parent->ipanel->Mutex);
-                parent->ipanel->origin = f->GetOrigin();
-                parent->ipanel->step = f->GetStep();
-                parent->ipanel->numIt = f->GetNum();
-                parent->ipanel->secPerIt = dt/f->GetCyclesPerRun();
-                parent->ipanel->horizontalSize = f->GetHorizontalSize();
+                parent->ipanel->SetOrigin(f->GetOrigin());
+                parent->ipanel->SetStep(f->GetStep());
+                parent->ipanel->SetIterations(f->GetNum());
+                parent->ipanel->SetSecPerIter(dt/f->GetCyclesPerRun());
+                parent->ipanel->SetHorizontalSize(f->GetHorizontalSize());
             }
             /**Update ready-to-draw bitmap*/{
                 std::lock_guard<std::mutex> lock3(bmpMutex);

@@ -48,18 +48,34 @@ InfoPanel::InfoPanel(FractalFrame* p):wxPanel(p), parent(p){
     this->SetSizer(StatBoxSizer);
 }
 
+void InfoPanel::SetOrigin        (FractalBitmap::ComplexNum origin_    ){ this->origin     = origin_    ; }
+void InfoPanel::SetStep          (FractalBitmap::complex_t  step_      ){ this->step       = step_      ; }
+void InfoPanel::SetIterations    (FractalBitmap::iter_t     iter_      ){ this->iter       = iter_      ; }
+void InfoPanel::SetSecPerIter    (long double               secPerIter_){ this->secPerIter = secPerIter_; }
+void InfoPanel::SetHorizontalSize(FractalBitmap::complex_t  hsize_     ){ this->hsize      = hsize_     ; }
+
+FractalBitmap::ComplexNum InfoPanel::GetOrigin        () const { return origin    ; }
+FractalBitmap::complex_t  InfoPanel::GetStep          () const { return step      ; }
+FractalBitmap::iter_t     InfoPanel::GetIterations    () const { return iter      ; }
+long double               InfoPanel::GetSecPerIter    () const { return secPerIter; }
+FractalBitmap::complex_t  InfoPanel::GetHorizontalSize() const { return hsize     ; }
+
 void InfoPanel::OnPaintEvent(wxPaintEvent &){
     std::lock_guard<std::mutex> lock(Mutex);
 
     wxPoint p = wxGetMousePosition() - parent->fpanel->GetScreenPosition();
-    FractalBitmap::ComplexNum MousePosC = origin + FractalBitmap::ComplexNum(+(FractalBitmap::complex_t)p.x*step,-(FractalBitmap::complex_t)p.y*step);
+    FractalBitmap::ComplexNum MousePosC = GetOrigin() +
+        FractalBitmap::ComplexNum(
+            +(FractalBitmap::complex_t)p.x * GetStep(),
+            -(FractalBitmap::complex_t)p.y * GetStep()
+        );
 
     ReCtrl  ->ChangeValue(float2str(MousePosC.real(), 20, std::ios_base::scientific | std::ios_base::showpos));
     ImCtrl  ->ChangeValue(float2str(MousePosC.imag(), 20, std::ios_base::scientific | std::ios_base::showpos));
-    StepCtrl->ChangeValue(float2str(step            ,  4, std::ios_base::scientific));
-    ItCtrl  ->ChangeValue(std::to_string(numIt));
-    TimeCtrl->ChangeValue(float2str(secPerIt, 12, std::ios_base::fixed));
-    DiamCtrl->ChangeValue(float2str(horizontalSize, 6));
+    StepCtrl->ChangeValue(float2str(GetStep()       ,  4, std::ios_base::scientific));
+    ItCtrl  ->ChangeValue(std::to_string(GetIterations()));
+    TimeCtrl->ChangeValue(float2str(GetSecPerIter(), 12, std::ios_base::fixed));
+    DiamCtrl->ChangeValue(float2str(GetHorizontalSize(), 6));
 }
 
 BEGIN_EVENT_TABLE(InfoPanel, wxPanel)
