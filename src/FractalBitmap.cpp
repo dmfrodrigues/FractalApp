@@ -2,8 +2,8 @@
 
 FractalBitmap::FractalBitmap():wxBitmap(1,1,24){}
 
-void FractalBitmap::Create(FractalBitmap::ComplexNum o, FractalBitmap::complex_t st, wxSize s){
-    wxBitmap::Create(s, 24);
+void FractalBitmap::Create(FractalBitmap::ComplexNum center_, FractalBitmap::complex_t step_, wxSize sz_){
+    wxBitmap::Create(sz_, 24);
     wxNativePixelData px(*((wxBitmap*)this));
     const unsigned N = GetWidth()*GetHeight();
     wxNativePixelData::Iterator p = px.GetPixels();
@@ -11,32 +11,32 @@ void FractalBitmap::Create(FractalBitmap::ComplexNum o, FractalBitmap::complex_t
         p.Red() = p.Green() = p.Blue() = 0;
     }
 
-    SetStep(st);
-    SetCenter(o);
+    SetStep(step_);
+    SetCenter(center_);
 }
 
 FractalBitmap::ComplexNum FractalBitmap::GetOrigin() const {
     return origin;
 }
 
-void FractalBitmap::SetOrigin(const ComplexNum &orig){
-    this->origin = orig;
+void FractalBitmap::SetOrigin(const ComplexNum &origin_){
+    this->origin = origin_;
 }
 
 FractalBitmap::ComplexNum FractalBitmap::GetCenter() const {
     return GetCenterFromOrigin(GetOrigin(), GetStep(), GetSize());
 }
 
-void FractalBitmap::SetCenter(const ComplexNum &cent){
-    this->origin = GetOriginFromCenter(cent, GetStep(), GetSize());
+void FractalBitmap::SetCenter(const ComplexNum &center){
+    this->origin = GetOriginFromCenter(center, GetStep(), GetSize());
 }
 
 FractalBitmap::complex_t FractalBitmap::GetStep() const {
     return step;
 }
 
-void FractalBitmap::SetStep(const complex_t &stp){
-    this->step = stp;
+void FractalBitmap::SetStep(const complex_t &step_){
+    this->step = step_;
 }
 
 FractalBitmap::complex_t FractalBitmap::GetHorizontalSize() const{

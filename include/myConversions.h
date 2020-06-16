@@ -29,12 +29,4 @@ T ato(const std::string& in){
     return ret;
 }
 
-/*
-template<class T>
-inline std::string mysprintf(T n, const char* fmt){
-    char retBuffer[50];
-    sprintf(retBuffer, fmt, n);
-    return std::string(retBuffer);
-}
-*/
 #endif // MYCONVERSIONS_H_INCLUDED

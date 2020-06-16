@@ -12,7 +12,7 @@ enum{
     ID_HDPRINTSCREEN  = 2
 };
 ///Constructor
-FractalFrame::FractalFrame(FractalBitmap *p):wxFrame(nullptr, wxID_ANY, "Mandelbrot set plotter"){
+FractalFrame::FractalFrame(FractalBitmap *bmp):wxFrame(nullptr, wxID_ANY, "Mandelbrot set plotter"){
     /**Menu*/{
         wxMenu* menuFile      = new wxMenu;
         wxMenuItem* menuItem_Printscreen   = new wxMenuItem(menuFile, ID_PRINTSCREEN  , wxT("Save printscreen"));
@@ -25,7 +25,7 @@ FractalFrame::FractalFrame(FractalBitmap *p):wxFrame(nullptr, wxID_ANY, "Mandelb
         this->SetMenuBar(menuBar);
     }
     /**Panels*/{
-        fpanel = new FractalPanel(this, wxSize(1150, 500), p);
+        fpanel = new FractalPanel(this, wxSize(1150, 500), bmp);
         ipanel = new InfoPanel   (this);
     }
     /**Background color*/{
@@ -58,7 +58,7 @@ void NewImageName(const char* format, char* name){
 }
 void FractalFrame::OnPrintscreenEvent(wxCommandEvent &){
     char new_path[256];
-    NewImageName(".\\Printscreens\\Image_%04d.png", new_path);
+    NewImageName("./Printscreens/Image_%04d.png", new_path);
     {
         if(fpanel->GetFractalBitmap()->SaveFile(new_path, wxBITMAP_TYPE_PNG))
             wxLogMessage("Printscreen saved as " + wxString(new_path));
@@ -66,7 +66,7 @@ void FractalFrame::OnPrintscreenEvent(wxCommandEvent &){
 }
 void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &){
     char new_path[256];
-    NewImageName(".\\Printscreens\\Image_%04d.png", new_path);
+    NewImageName("./Printscreens/Image_%04d.png", new_path);
 
     FractalBitmap *g;
     FractalBitmap::iter_t num;

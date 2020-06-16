@@ -18,7 +18,7 @@ private:
     void OnCloseEvent(wxCloseEvent& evt);
 
 public:
-    FractalFrame(FractalBitmap *p);
+    FractalFrame(FractalBitmap *bmp);
 
     const FractalPanel* GetFractalPanel() const;
     InfoPanel* GetInfoPanel();

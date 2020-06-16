@@ -60,13 +60,12 @@ public:
     FractalBitmap();
 
     /**
-     * FractalBitmap::Create receives parameters, and resets the object using the
-     * arguments to start calculations from the beginning.
-     * @param   o           center of the fractal
+     * Creates fresh FractalBitmap, using the provided parameters.
+     * @param   center      center of the fractal
      * @param   st          step (distance between two consecutive pixels)
      * @param   s           size of the fractal in pixels (width, height)
      */
-    virtual void Create(ComplexNum o, complex_t st, wxSize s);
+    virtual void Create(ComplexNum center, complex_t step, wxSize sz);
     /**
      * FractalBitmap::Clone receives the same parameters as
      * FractalBitmap::Create. It creates a new object in the heap, runs Create on it,
@@ -92,37 +91,38 @@ public:
      * 
      * @return ComplexNum Origin
      */
-    virtual ComplexNum  GetOrigin()                 const final;
+    virtual ComplexNum  GetOrigin()                   const final;
     /**
      * @brief Set the origin (top-left corner) complex coordinates.
      * 
      * @param orig New origin value
      */
-    virtual void        SetOrigin(const ComplexNum &orig) final;
+    virtual void        SetOrigin(const ComplexNum &origin) final;
     /**
      * @brief Get the center of the screen in complex coordinates.
      * 
      * @return ComplexNum Center
      */
-    virtual ComplexNum  GetCenter()                 const final;
+    virtual ComplexNum  GetCenter()                   const final;
     /**
      * @brief Set the center of the screen in complex coordinates.
      * 
      * @param cent New center value
      */
-    virtual void        SetCenter(const ComplexNum &cent) final;
+    virtual void        SetCenter(const ComplexNum &center) final;
     /**
      * @brief Get the step (in complex coordinate units) between consecutive pixels.
      * 
      * @return complex_t Step
      */
-    virtual complex_t   GetStep()                   const final;
+    virtual complex_t   GetStep()                     const final;
     /**
      * @brief Set the step between consecutive pixels.
      * 
      * @param stp New step value
      */
-    virtual void        SetStep(const complex_t &stp)     final;
+    virtual void        SetStep(const complex_t &step)      final;
+
     virtual iter_t GetNum()            const = 0;
     virtual complex_t   GetHorizontalSize() const final;
     virtual iter_t GetCyclesPerRun()   const = 0;

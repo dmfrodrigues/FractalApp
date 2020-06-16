@@ -8,12 +8,12 @@ class FractalFrame;
 class FractalPanel: public wxPanel, public wxThreadHelper {
 private:
     FractalFrame  *parent;
-    FractalBitmap *f;
+    FractalBitmap *bmp;
 
-    wxBitmap bmp;
+    wxBitmap bmp_buffer;
     std::mutex bmpMutex;
 public:
-    FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *frac);
+    FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *bmp);
 
     const FractalBitmap* GetFractalBitmap() const;
 private:
