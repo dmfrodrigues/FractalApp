@@ -103,9 +103,9 @@ public:
      * Provide information to the outside world, so the panels' information can
      * be updated
      */
-    virtual ComplexNum GetOrigin()                 const final { return origin; }
-    virtual void       SetOrigin(const ComplexNum &orig) final { this->origin = orig; }
-    virtual ComplexNum GetCenter()                 const final { return GetCenterFromOrigin(GetOrigin(), GetStep(), GetSize()); }
+    virtual ComplexNum GetOrigin()                 const final;
+    virtual void       SetOrigin(const ComplexNum &orig) final;
+    virtual ComplexNum GetCenter()                 const final;
     
     virtual complex_t   GetStep()           const = 0;
     virtual IterationT GetNum()            const = 0;
