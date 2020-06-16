@@ -14,7 +14,7 @@ private:
 
     FractalBitmap::ComplexNum origin;
     FractalBitmap::complex_t step;
-    FractalBitmap::IterationT numIt;
+    FractalBitmap::iter_t numIt;
     long double secPerIt;
     FractalBitmap::complex_t horizontalSize;
 

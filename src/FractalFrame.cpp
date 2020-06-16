@@ -62,22 +62,23 @@ void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &event){
     NewImageName(".\\Printscreens\\Image_%04d.png", new_path);
 
     FractalBitmap *g;
-    FractalBitmap::IterationT num;
+    FractalBitmap::iter_t num;
     {
         std::lock_guard<std::mutex> lock(fpanel->f->Mutex);
 
-        FractalBitmap::ComplexNum center = fpanel->f->GetCenter();
-        FractalBitmap::complex_t step = fpanel->f->GetStep();
+        FractalBitmap::ComplexNum center = fpanel->f->getCenter();
+        FractalBitmap::complex_t step = fpanel->f->getStep();
         wxSize sz = fpanel->f->GetSize();
-        num = fpanel->f->GetNum();
+        num = fpanel->f->getNum();
         HDPrintscreenDialog *dialog = new HDPrintscreenDialog(this, &center, &step, &sz, &num);
         if(dialog->ShowModal() != wxID_OK) return;
-        g = fpanel->f->clone(center, step, sz, true);
+        g = fpanel->f->clone();
+        g->init(center, step, sz, true);
     }
 
     num /= g->GetCyclesPerRun();
     while(--num){
-        g->UpdateMath();
+        g->update();
     }
     if(g->SaveFile(new_path, wxBITMAP_TYPE_PNG))
         wxLogMessage("Printscreen saved as " + wxString(new_path));
