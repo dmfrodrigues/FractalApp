@@ -61,7 +61,7 @@ void HDPrintscreenDialog::OnCancel(wxCommandEvent&){
     this->Destroy();
 }
 
-BEGIN_EVENT_TABLE(HDPrintscreenDialog, wxDialog)
+wxBEGIN_EVENT_TABLE(HDPrintscreenDialog, wxDialog)
     EVT_BUTTON(wxID_OK,     HDPrintscreenDialog::OnOK    )
     EVT_BUTTON(wxID_CANCEL, HDPrintscreenDialog::OnCancel)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()

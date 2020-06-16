@@ -81,7 +81,7 @@ void InfoPanel::OnPaintEvent(wxPaintEvent &){
     DiamCtrl->ChangeValue(float2str(GetHorizontalSize(), 6));
 }
 
-BEGIN_EVENT_TABLE(InfoPanel, wxPanel)
+wxBEGIN_EVENT_TABLE(InfoPanel, wxPanel)
     EVT_ERASE_BACKGROUND(InfoPanel::OnEraseEvent)
     EVT_PAINT(InfoPanel::OnPaintEvent)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()

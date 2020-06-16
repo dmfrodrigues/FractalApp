@@ -82,9 +82,9 @@ void FractalPanel::OnZoomEvent(wxMouseEvent& evt){
     f->reset(newcenter, newstep, GetSize(), true);
 }
 
-BEGIN_EVENT_TABLE(FractalPanel, wxPanel)
+wxBEGIN_EVENT_TABLE(FractalPanel, wxPanel)
     EVT_MOUSEWHEEL(FractalPanel::OnZoomEvent )
     EVT_SIZE      (FractalPanel::OnSizeEvent )
     EVT_ERASE_BACKGROUND(FractalPanel::OnEraseEvent)
     EVT_PAINT     (FractalPanel::OnPaintEvent)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
