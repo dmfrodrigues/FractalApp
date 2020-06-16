@@ -60,7 +60,7 @@ public:
     FractalBitmap();
 
     /**
-     * FractalBitmap::reset receives parameters, and resets the object using the
+     * FractalBitmap::Create receives parameters, and resets the object using the
      * arguments to start calculations from the beginning.
      * @param   o           origin (or center) of the fractal
      * @param   st          step (distance between two consecutive pixels)
@@ -68,10 +68,10 @@ public:
      * @param   IsCenter    true if provided argument `o` is the center of the
                             fractal, false if `o` is the origin.
      */
-    virtual void reset(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) = 0;
+    virtual void Create(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) = 0;
     /**
      * FractalBitmap::Clone receives the same parameters as
-     * FractalBitmap::reset. It creates a new object in the heap, runs reset on it,
+     * FractalBitmap::Create. It creates a new object in the heap, runs Create on it,
      * and returns the pointer to the new object
      * @param   o           origin (or center) of the fractal
      * @param   st          step (distance between two consecutive pixels)
@@ -79,7 +79,7 @@ public:
      * @param   IsCenter    true if provided argument `o` is the center of the
                             fractal, false if `o` is the origin.
      */
-    virtual FractalBitmap* Clone(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) const = 0;
+    virtual FractalBitmap* Clone() const = 0;
     
     // CALCULATIONS ==================================================
     /**
