@@ -9,7 +9,7 @@ IDIR   =./include
 ODIR   =./obj
 LDIR   =./lib
 
-CFLAGS =-std=c++11 -ffast-math -O3 $(IFLAGS) `wx-config --cxxflags` -c
+CFLAGS =-std=c++11 -g -ffast-math -O3 $(IFLAGS) `wx-config --cxxflags` -c
 
 all: makefolders $(LDIR)/libfractalapp.a
 
