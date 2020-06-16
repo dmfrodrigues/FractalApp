@@ -40,6 +40,10 @@ FractalFrame::FractalFrame(FractalBitmap *p):wxFrame(nullptr, wxID_ANY, "Mandelb
     }
 }
 
+const FractalPanel* FractalFrame::GetFractalPanel() const{
+    return fpanel;
+}
+
 void NewImageName(const char* format, char* name){
     const unsigned N = 100000;
     for(unsigned i = 0; i < N; ++i){

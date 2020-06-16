@@ -10,9 +10,6 @@
 ///FRACTALFRAME
 class FractalFrame: public wxFrame {
 friend class FractalPanel;
-friend class InfoPanel;
-public:
-    FractalFrame(FractalBitmap *p);
 private:
     FractalPanel* fpanel;
     InfoPanel*    ipanel;
@@ -20,6 +17,11 @@ private:
     void OnPrintscreenEvent(wxCommandEvent &event);
     void OnHDPrintscreenEvent(wxCommandEvent &event);
     void OnCloseEvent(wxCloseEvent& evt);
+
+public:
+    FractalFrame(FractalBitmap *p);
+
+    const FractalPanel* GetFractalPanel() const;
 
     wxDECLARE_EVENT_TABLE();
 };
