@@ -2,12 +2,29 @@
 
 FractalBitmap::FractalBitmap():wxBitmap(1,1,24){}
 
-FractalBitmap::ComplexNum FractalBitmap::GetOrigin() const { return origin; }
-void FractalBitmap::SetOrigin(const ComplexNum &orig){ this->origin = orig; }
-FractalBitmap::ComplexNum FractalBitmap::GetCenter() const { return GetCenterFromOrigin(GetOrigin(), GetStep(), GetSize()); }
+FractalBitmap::ComplexNum FractalBitmap::GetOrigin() const {
+    return origin;
+}
 
-FractalBitmap::complex_t FractalBitmap::GetStep() const { return step; }
-void FractalBitmap::SetStep(const complex_t &stp){ this->step = stp; }    
+void FractalBitmap::SetOrigin(const ComplexNum &orig){
+    this->origin = orig;
+}
+
+FractalBitmap::ComplexNum FractalBitmap::GetCenter() const {
+    return GetCenterFromOrigin(GetOrigin(), GetStep(), GetSize());
+}
+
+void FractalBitmap::SetCenter(const ComplexNum &cent){
+    this->origin = GetOriginFromCenter(cent, GetStep(), GetSize());
+}
+
+FractalBitmap::complex_t FractalBitmap::GetStep() const {
+    return step;
+}
+
+void FractalBitmap::SetStep(const complex_t &stp){
+    this->step = stp;
+}
 
 FractalBitmap::complex_t FractalBitmap::GetHorizontalSize() const{
     return GetStep()*(complex_t)GetSize().x;

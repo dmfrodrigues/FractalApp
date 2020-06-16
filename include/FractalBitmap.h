@@ -110,6 +110,12 @@ public:
      */
     virtual ComplexNum  GetCenter()                 const final;
     /**
+     * @brief Set the center of the screen in complex coordinates.
+     * 
+     * @param cent New center value
+     */
+    virtual void        SetCenter(const ComplexNum &cent) final;
+    /**
      * @brief Get the step (in complex coordinate units) between consecutive pixels.
      * 
      * @return complex_t Step
