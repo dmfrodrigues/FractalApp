@@ -1,5 +1,7 @@
 # FractalApp
 
+![compile](https://github.com/dmfrodrigues/fractal-app/workflows/compile/badge.svg)
+
 Provides an easy interface to plot fractals.
 
 This project makes use of the [wxWidgets](https://www.wxwidgets.org/) library, version [3.0.4](https://www.wxwidgets.org/downloads/).
