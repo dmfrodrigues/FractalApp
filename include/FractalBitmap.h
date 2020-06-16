@@ -50,6 +50,7 @@ public:
     typedef std::complex<complex_t> ComplexNum;
 private:
     ComplexNum          origin; ///Upper-left corner
+    complex_t           step;   ///Difference between consecutive pixels
 public:
     /**
      * It is NOT mandatory to overload FractalBitmap::FractalBitmap.
@@ -103,12 +104,11 @@ public:
      * Provide information to the outside world, so the panels' information can
      * be updated
      */
-    virtual ComplexNum GetOrigin()                 const final;
-    virtual void       SetOrigin(const ComplexNum &orig) final;
-    virtual ComplexNum GetCenter()                 const final;
-    
-    virtual complex_t   GetStep()           const = 0;
-    virtual void        SetStep(const complex_t &stp) = 0;
+    virtual ComplexNum  GetOrigin()                 const final;
+    virtual void        SetOrigin(const ComplexNum &orig) final;
+    virtual ComplexNum  GetCenter()                 const final;
+    virtual complex_t   GetStep()               const final;
+    virtual void        SetStep(const complex_t &stp) final;
     virtual IterationT GetNum()            const = 0;
     virtual complex_t   GetHorizontalSize() const final;
     virtual IterationT GetCyclesPerRun()   const = 0;
