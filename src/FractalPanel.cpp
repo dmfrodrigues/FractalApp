@@ -42,7 +42,6 @@ wxThread::ExitCode FractalPanel::Entry(){
             auto t2 = hrclock::now();
             auto dt = std::chrono::duration<long double>(t2-t1).count();
             /**Update values in ipanel for showing*/{
-                std::lock_guard<std::mutex> lock2(parent->ipanel->Mutex);
                 parent->ipanel->SetOrigin(f->GetOrigin());
                 parent->ipanel->SetStep(f->GetStep());
                 parent->ipanel->SetIterations(f->GetNum());

@@ -48,11 +48,11 @@ InfoPanel::InfoPanel(FractalFrame* p):wxPanel(p), parent(p){
     this->SetSizer(StatBoxSizer);
 }
 
-void InfoPanel::SetOrigin        (FractalBitmap::ComplexNum origin_    ){ this->origin     = origin_    ; }
-void InfoPanel::SetStep          (FractalBitmap::complex_t  step_      ){ this->step       = step_      ; }
-void InfoPanel::SetIterations    (FractalBitmap::iter_t     iter_      ){ this->iter       = iter_      ; }
-void InfoPanel::SetSecPerIter    (long double               secPerIter_){ this->secPerIter = secPerIter_; }
-void InfoPanel::SetHorizontalSize(FractalBitmap::complex_t  hsize_     ){ this->hsize      = hsize_     ; }
+void InfoPanel::SetOrigin        (FractalBitmap::ComplexNum origin_    ){ if(origin_     != GetOrigin        ()){ std::lock_guard<std::mutex> lock(Mutex); this->origin     = origin_    ; } }
+void InfoPanel::SetStep          (FractalBitmap::complex_t  step_      ){ if(step_       != GetStep          ()){ std::lock_guard<std::mutex> lock(Mutex); this->step       = step_      ; } }
+void InfoPanel::SetIterations    (FractalBitmap::iter_t     iter_      ){ if(iter_       != GetIterations    ()){ std::lock_guard<std::mutex> lock(Mutex); this->iter       = iter_      ; } }
+void InfoPanel::SetSecPerIter    (long double               secPerIter_){ if(secPerIter_ != GetSecPerIter    ()){ std::lock_guard<std::mutex> lock(Mutex); this->secPerIter = secPerIter_; } }
+void InfoPanel::SetHorizontalSize(FractalBitmap::complex_t  hsize_     ){ if(hsize_      != GetHorizontalSize()){ std::lock_guard<std::mutex> lock(Mutex); this->hsize      = hsize_     ; } }
 
 FractalBitmap::ComplexNum InfoPanel::GetOrigin        () const { return origin    ; }
 FractalBitmap::complex_t  InfoPanel::GetStep          () const { return step      ; }

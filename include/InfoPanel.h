@@ -4,8 +4,6 @@
 class FractalFrame;
 
 class InfoPanel: public wxPanel {
-friend class FractalFrame;
-friend class FractalPanel;
 private:
     FractalFrame *parent;
     wxTextCtrl *ReCtrl, *ImCtrl, *StepCtrl, *ItCtrl, *TimeCtrl, *DiamCtrl;
@@ -18,11 +16,11 @@ private:
     long double secPerIter;
     FractalBitmap::complex_t hsize;
 
-    InfoPanel(FractalFrame *p);
-
     void OnEraseEvent(wxEraseEvent &){};
     void OnPaintEvent(wxPaintEvent &evt);
 public:
+    InfoPanel(FractalFrame *p);
+
     void SetOrigin        (FractalBitmap::ComplexNum origin    );
     void SetStep          (FractalBitmap::complex_t  step      );
     void SetIterations    (FractalBitmap::iter_t     iter      );
