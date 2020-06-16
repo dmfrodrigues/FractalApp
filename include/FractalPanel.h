@@ -24,8 +24,6 @@ private:
     void OnEraseEvent(wxEraseEvent &){};
     void OnPaintEvent(wxPaintEvent& p);
 
-    //void UpdateInfoPanel();
-
     wxDECLARE_EVENT_TABLE();
 };
 
