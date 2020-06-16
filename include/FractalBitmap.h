@@ -50,16 +50,14 @@ public:
     typedef std::complex<complex_t> ComplexNum;
 private:
     /// Origin of the screen (upper-left corner) in complex coordinate units.
-    ComplexNum          origin;
+    ComplexNum origin;
     /// Step between consecutive pixels.
-    complex_t           step;
+    complex_t  step;
 public:
     /**
      * @brief Construct a new Fractal Bitmap object without arguments.
      */
     FractalBitmap();
-
-    std::mutex Mutex;
 
     /**
      * FractalBitmap::reset receives parameters, and resets the object using the

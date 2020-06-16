@@ -26,27 +26,29 @@ FractalPanel::FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *frac)
     }
 }
 
+const FractalBitmap* FractalPanel::GetFractalBitmap() const{
+    return f;
+}
+
 typedef std::chrono::high_resolution_clock hrclock;
 wxThread::ExitCode FractalPanel::Entry(){
     /**Create fractal*/{
-        std::lock_guard<std::mutex> lock(f->Mutex);
         f->reset(FractalBitmap::ComplexNum(FractalBitmap::complex_t(-0.75L),FractalBitmap::complex_t(0.0L)), //-0.75L,0.0L
             FractalBitmap::complex_t(5.0e-3), GetSize(), true); //5.0e-3
     }
     while(!GetThread()->TestDestroy()){
         {
             ///Update the fractal & measure time
-            std::lock_guard<std::mutex> lock(f->Mutex);
             auto t1 = hrclock::now();
             f->UpdateMath();
             auto t2 = hrclock::now();
             auto dt = std::chrono::duration<long double>(t2-t1).count();
             /**Update values in ipanel for showing*/{
-                parent->ipanel->SetOrigin(f->GetOrigin());
-                parent->ipanel->SetStep(f->GetStep());
-                parent->ipanel->SetIterations(f->GetNum());
-                parent->ipanel->SetSecPerIter(dt/f->GetCyclesPerRun());
-                parent->ipanel->SetHorizontalSize(f->GetHorizontalSize());
+                parent->GetInfoPanel()->SetOrigin(f->GetOrigin());
+                parent->GetInfoPanel()->SetStep(f->GetStep());
+                parent->GetInfoPanel()->SetIterations(f->GetNum());
+                parent->GetInfoPanel()->SetSecPerIter(dt/f->GetCyclesPerRun());
+                parent->GetInfoPanel()->SetHorizontalSize(f->GetHorizontalSize());
             }
             /**Update ready-to-draw bitmap*/{
                 std::lock_guard<std::mutex> lock3(bmpMutex);
@@ -61,8 +63,6 @@ wxThread::ExitCode FractalPanel::Entry(){
 }
 
 void FractalPanel::OnSizeEvent(wxSizeEvent&){
-    std::lock_guard<std::mutex> lock(f->Mutex);
-
     f->reset(f->GetCenter(), f->GetStep(), this->GetSize(), true);
 }
 
@@ -74,8 +74,6 @@ void FractalPanel::OnPaintEvent(wxPaintEvent&){
 }
 
 void FractalPanel::OnZoomEvent(wxMouseEvent& evt){
-    std::lock_guard<std::mutex> lock(f->Mutex);
-
     wxPoint p = wxGetMousePosition() - GetScreenPosition();
     FractalBitmap::ComplexNum newcenter = f->GetOrigin() + FractalBitmap::ComplexNum(
         FractalBitmap::complex_t(p.x)*f->GetStep(), FractalBitmap::complex_t(-p.y)*f->GetStep()

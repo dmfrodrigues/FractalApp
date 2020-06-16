@@ -9,7 +9,6 @@
 ///=========================================================
 ///FRACTALFRAME
 class FractalFrame: public wxFrame {
-friend class FractalPanel;
 private:
     FractalPanel* fpanel;
     InfoPanel*    ipanel;
@@ -22,6 +21,7 @@ public:
     FractalFrame(FractalBitmap *p);
 
     const FractalPanel* GetFractalPanel() const;
+    InfoPanel* GetInfoPanel();
 
     wxDECLARE_EVENT_TABLE();
 };

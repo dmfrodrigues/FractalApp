@@ -6,17 +6,17 @@
 class FractalFrame;
 
 class FractalPanel: public wxPanel, public wxThreadHelper {
-friend class FractalFrame;
-friend class InfoPanel;
-public:
-    FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *frac);
 private:
     FractalFrame  *parent;
     FractalBitmap *f;
 
     wxBitmap bmp;
     std::mutex bmpMutex;
+public:
+    FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *frac);
 
+    const FractalBitmap* GetFractalBitmap() const;
+private:
     wxThread::ExitCode Entry();
 
     void OnZoomEvent(wxMouseEvent& evt);
