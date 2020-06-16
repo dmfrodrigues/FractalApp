@@ -14,23 +14,19 @@
 #include "FractalBitmap.h"
 
 class HDPrintscreenDialog: public wxDialog {
-public:
-    HDPrintscreenDialog(wxWindow *p, FractalBitmap::ComplexNum *c, FractalBitmap::complex_t *z, wxSize *s, FractalBitmap::iter_t *it);
 private:
-    ///================================
-    ///VARIABLES
     wxTextCtrl *ReCtrl, *ImCtrl, *StepCtrl, *SzXCtrl, *SzYCtrl, *ItCtrl;
     FractalBitmap::ComplexNum *center;
     FractalBitmap::complex_t *step;
     wxSize *sz;
     FractalBitmap::iter_t* numIt;
-    ///================================
-    ///BUTTONS AND CALLBACKS
+public:
+    HDPrintscreenDialog(wxWindow *p, FractalBitmap::ComplexNum *c, FractalBitmap::complex_t *z, wxSize *s, FractalBitmap::iter_t *it);
+private:
     wxButton*     OKBtn; void OnOK    (wxCommandEvent& event);
     wxButton* CancelBtn; void OnCancel(wxCommandEvent& event);
-    ///================================
-    ///EVENT TABLE
-    DECLARE_EVENT_TABLE()
+
+    wxDECLARE_EVENT_TABLE();
 };
 
 #endif // HDPRINTSCREENDIALOG_H_INCLUDED
