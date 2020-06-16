@@ -20,7 +20,7 @@ private:
 
     InfoPanel(FractalFrame *p);
 
-    void OnEraseEvent(wxEraseEvent &evt){};
+    void OnEraseEvent(wxEraseEvent &){};
     void OnPaintEvent(wxPaintEvent &evt);
 
     wxDECLARE_EVENT_TABLE();

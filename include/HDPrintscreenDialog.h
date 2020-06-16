@@ -1,7 +1,16 @@
 #ifndef HDPRINTSCREENDIALOG_H_INCLUDED
 #define HDPRINTSCREENDIALOG_H_INCLUDED
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-qual"
+#pragma GCC diagnostic ignored "-Wfloat-conversion"
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#pragma GCC diagnostic ignored "-Wconversion"
+#pragma GCC diagnostic ignored "-Wswitch-default"
+#pragma GCC diagnostic ignored "-Wredundant-decls"
 #include <wx/wx.h>
+#pragma GCC diagnostic pop
+
 #include "FractalBitmap.h"
 
 class HDPrintscreenDialog: public wxDialog {

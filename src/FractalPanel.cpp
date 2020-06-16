@@ -61,13 +61,13 @@ wxThread::ExitCode FractalPanel::Entry(){
     return (wxThread::ExitCode)0;
 }
 
-void FractalPanel::OnSizeEvent(wxSizeEvent& evt){
+void FractalPanel::OnSizeEvent(wxSizeEvent&){
     std::lock_guard<std::mutex> lock(f->Mutex);
 
     f->reset(f->GetCenter(), f->GetStep(), this->GetSize(), true);
-};
+}
 
-void FractalPanel::OnPaintEvent(wxPaintEvent& p){
+void FractalPanel::OnPaintEvent(wxPaintEvent&){
     std::lock_guard<std::mutex> lock(bmpMutex);
 
     wxPaintDC dc(this);

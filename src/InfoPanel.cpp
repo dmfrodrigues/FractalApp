@@ -48,7 +48,7 @@ InfoPanel::InfoPanel(FractalFrame* p):wxPanel(p), parent(p){
     this->SetSizer(StatBoxSizer);
 }
 
-void InfoPanel::OnPaintEvent(wxPaintEvent &evt){
+void InfoPanel::OnPaintEvent(wxPaintEvent &){
     std::lock_guard<std::mutex> lock(Mutex);
 
     wxPoint p = wxGetMousePosition() - parent->fpanel->GetScreenPosition();

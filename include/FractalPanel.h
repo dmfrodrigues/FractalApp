@@ -21,7 +21,7 @@ private:
 
     void OnZoomEvent(wxMouseEvent& evt);
     void OnSizeEvent(wxSizeEvent& evt);
-    void OnEraseEvent(wxEraseEvent &evt){};
+    void OnEraseEvent(wxEraseEvent &){};
     void OnPaintEvent(wxPaintEvent& p);
 
     //void UpdateInfoPanel();

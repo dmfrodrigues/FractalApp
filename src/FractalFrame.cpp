@@ -48,7 +48,7 @@ void NewImageName(const char* format, char* name){
     }
     throw std::logic_error("no available image names");
 }
-void FractalFrame::OnPrintscreenEvent(wxCommandEvent &event){
+void FractalFrame::OnPrintscreenEvent(wxCommandEvent &){
     char new_path[256];
     NewImageName(".\\Printscreens\\Image_%04d.png", new_path);
     {
@@ -57,7 +57,7 @@ void FractalFrame::OnPrintscreenEvent(wxCommandEvent &event){
             wxLogMessage("Printscreen saved as " + wxString(new_path));
     }
 }
-void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &event){
+void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &){
     char new_path[256];
     NewImageName(".\\Printscreens\\Image_%04d.png", new_path);
 
@@ -83,7 +83,7 @@ void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &event){
         wxLogMessage("Printscreen saved as " + wxString(new_path));
 }
 
-void FractalFrame::OnCloseEvent(wxCloseEvent& evt){
+void FractalFrame::OnCloseEvent(wxCloseEvent&){
     fpanel->GetThread()->Delete();
     Destroy();
 }

@@ -1,7 +1,6 @@
 #ifndef FRACTALFRAME_H_INCLUDED
 #define FRACTALFRAME_H_INCLUDED
 
-#include <wx/wx.h>
 #include "FractalBitmap.h"
 
 #include "FractalPanel.h"

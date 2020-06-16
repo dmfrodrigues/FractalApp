@@ -10,7 +10,15 @@
 #ifndef CURSOR_CROSS_H_INCLUDED
 #define CURSOR_CROSS_H_INCLUDED
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-qual"
+#pragma GCC diagnostic ignored "-Wfloat-conversion"
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#pragma GCC diagnostic ignored "-Wconversion"
+#pragma GCC diagnostic ignored "-Wswitch-default"
+#pragma GCC diagnostic ignored "-Wredundant-decls"
 #include <wx/cursor.h>
+#pragma GCC diagnostic pop
 
 extern const wxCursor CURSOR_CROSS;
 

@@ -46,7 +46,7 @@ HDPrintscreenDialog::HDPrintscreenDialog(wxWindow *p, FractalBitmap::ComplexNum 
     globalSizer->SetSizeHints(this);
     this->SetSizer(globalSizer);
 }
-void HDPrintscreenDialog::OnOK(wxCommandEvent& event){
+void HDPrintscreenDialog::OnOK(wxCommandEvent&){
     *center = FractalBitmap::ComplexNum(ato<FractalBitmap::complex_t>(ReCtrl->GetValue().ToStdString()),
                                         ato<FractalBitmap::complex_t>(ImCtrl->GetValue().ToStdString()));
     *step   =        ato<FractalBitmap::complex_t>(StepCtrl->GetValue().ToStdString());
@@ -56,7 +56,7 @@ void HDPrintscreenDialog::OnOK(wxCommandEvent& event){
     this->SetReturnCode(wxID_OK);
     this->Destroy();
 }
-void HDPrintscreenDialog::OnCancel(wxCommandEvent& event){
+void HDPrintscreenDialog::OnCancel(wxCommandEvent&){
     this->SetReturnCode(wxID_CANCEL);
     this->Destroy();
 }

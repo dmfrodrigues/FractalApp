@@ -1,6 +1,14 @@
 #include "CURSOR_CROSS.h"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-qual"
+#pragma GCC diagnostic ignored "-Wfloat-conversion"
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#pragma GCC diagnostic ignored "-Wconversion"
+#pragma GCC diagnostic ignored "-Wswitch-default"
+#pragma GCC diagnostic ignored "-Wredundant-decls"
 #include <wx/bitmap.h>
+#pragma GCC diagnostic pop
 
 static unsigned char uCROSS_bits[] = {
     255, 191, 254, 255,
