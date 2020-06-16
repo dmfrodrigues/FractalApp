@@ -62,13 +62,11 @@ public:
     /**
      * FractalBitmap::Create receives parameters, and resets the object using the
      * arguments to start calculations from the beginning.
-     * @param   o           origin (or center) of the fractal
+     * @param   o           center of the fractal
      * @param   st          step (distance between two consecutive pixels)
      * @param   s           size of the fractal in pixels (width, height)
-     * @param   IsCenter    true if provided argument `o` is the center of the
-                            fractal, false if `o` is the origin.
      */
-    virtual void Create(ComplexNum o, complex_t st, wxSize s, bool IsCenter);
+    virtual void Create(ComplexNum o, complex_t st, wxSize s);
     /**
      * FractalBitmap::Clone receives the same parameters as
      * FractalBitmap::Create. It creates a new object in the heap, runs Create on it,
