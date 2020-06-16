@@ -40,7 +40,7 @@ wxThread::ExitCode FractalPanel::Entry(){
         {
             ///Update the fractal & measure time
             auto t1 = hrclock::now();
-            f->UpdateMath();
+            f->Update();
             auto t2 = hrclock::now();
             auto dt = std::chrono::duration<long double>(t2-t1).count();
             /**Update values in ipanel for showing*/{

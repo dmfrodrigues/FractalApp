@@ -70,7 +70,7 @@ public:
      */
     virtual void reset(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) = 0;
     /**
-     * FractalBitmap::clone receives the same parameters as
+     * FractalBitmap::Clone receives the same parameters as
      * FractalBitmap::reset. It creates a new object in the heap, runs reset on it,
      * and returns the pointer to the new object
      * @param   o           origin (or center) of the fractal
@@ -79,14 +79,14 @@ public:
      * @param   IsCenter    true if provided argument `o` is the center of the
                             fractal, false if `o` is the origin.
      */
-    virtual FractalBitmap* clone(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) const = 0;
+    virtual FractalBitmap* Clone(ComplexNum o, complex_t st, wxSize s, bool IsCenter = false) const = 0;
     
     // CALCULATIONS ==================================================
     /**
      * Make calculations, and update pixels accordingly. This is the most
      * important function of the class.
      */
-    virtual void UpdateMath() = 0;
+    virtual void Update() = 0;
 
     // GET FUNCTIONS =================================================
     /**

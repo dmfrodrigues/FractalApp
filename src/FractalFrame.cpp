@@ -79,12 +79,12 @@ void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &){
         num                              = fpanel->GetFractalBitmap()->GetNum();
         HDPrintscreenDialog *dialog = new HDPrintscreenDialog(this, &center, &step, &sz, &num);
         if(dialog->ShowModal() != wxID_OK) return;
-        g = fpanel->GetFractalBitmap()->clone(center, step, sz, true);
+        g = fpanel->GetFractalBitmap()->Clone(center, step, sz, true);
     }
 
     num /= g->GetCyclesPerRun();
     while(--num){
-        g->UpdateMath();
+        g->Update();
     }
     if(g->SaveFile(new_path, wxBITMAP_TYPE_PNG))
         wxLogMessage("Printscreen saved as " + wxString(new_path));
