@@ -96,7 +96,7 @@ public:
     virtual ComplexNum GetCenter()         const = 0;
     virtual complex_t   GetStep()           const = 0;
     virtual IterationT GetNum()            const = 0;
-    virtual complex_t   GetHorizontalSize() const = 0;
+    virtual complex_t   GetHorizontalSize() const final;
     virtual IterationT GetCyclesPerRun()   const = 0;
 
     ///STATIC FUNCTIONS ==============================================

@@ -2,6 +2,10 @@
 
 FractalBitmap::FractalBitmap():wxBitmap(1,1,24){}
 
+FractalBitmap::complex_t FractalBitmap::GetHorizontalSize() const{
+    return GetStep()*(complex_t)GetSize().x;
+}
+
 FractalBitmap::ComplexNum FractalBitmap::GetOriginFromCenter(ComplexNum cent, complex_t st, wxSize s){
     return cent + ComplexNum(complex_t(-s.x/2)*st, complex_t(+s.y/2)*st);
 }
