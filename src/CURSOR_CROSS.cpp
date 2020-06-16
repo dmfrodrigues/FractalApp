@@ -10,7 +10,7 @@
 #include <wx/bitmap.h>
 #pragma GCC diagnostic pop
 
-static unsigned char uCROSS_bits[] = {
+static const unsigned char uCROSS_bits[] = {
     255, 191, 254, 255,
     255, 191, 254, 255,
     255, 191, 254, 255,
@@ -44,7 +44,7 @@ static unsigned char uCROSS_bits[] = {
     255, 191, 254, 255,
     255, 191, 254, 255,
     };
-static unsigned char uCROSS_mask[] = {
+static const unsigned char uCROSS_mask[] = {
     255,  63, 254, 255,
     255,  63, 254, 255,
     255,  63, 254, 255,
@@ -78,8 +78,8 @@ static unsigned char uCROSS_mask[] = {
     255,  63, 254, 255,
     255, 255, 255, 255,
     };
-static char *CROSS_bits = reinterpret_cast<char*>(uCROSS_bits);
-static char *CROSS_mask = reinterpret_cast<char*>(uCROSS_mask);
+static const char *CROSS_bits = reinterpret_cast<const char*>(uCROSS_bits);
+static const char *CROSS_mask = reinterpret_cast<const char*>(uCROSS_mask);
 #ifdef __WXMSW__
 wxCursor CreateCURSOR_CROSS(){
     wxInitAllImageHandlers();
