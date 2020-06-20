@@ -1,5 +1,7 @@
 # FractalApp
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 ![compile](https://github.com/dmfrodrigues/fractal-app/workflows/compile/badge.svg)
 
 Provides an easy interface to plot fractals.
