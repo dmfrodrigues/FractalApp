@@ -29,18 +29,19 @@ jobs:
         cd ..\lib
         dir
         cd ..
-        echo %PATH%
-        echo "##[add-path]D:\wx\3.0.5"
-        echo %PATH%
+        $Env:Path
+        echo "::add-path::D:\wx\3.0.5"
+        $Env:Path
 
     - name: Checkout submodules
       run: |
+        $Env:Path
         git submodule sync --recursive
         git submodule update --init --force --recursive --depth=1
     
     - name: cmake
       run: |
-        echo %PATH%
+        $Env:Path
         mkdir build
         cd build
         cmake ..
