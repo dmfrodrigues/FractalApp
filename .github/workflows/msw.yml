@@ -19,8 +19,8 @@ jobs:
         mkdir wx\3.0.5
         cd wx\3.0.5
         curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxWidgets-3.0.5-headers.7z --output headers.7z
-        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc140_Dev.7z --output Dev.7z
-        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc140_ReleaseDLL.7z --output ReleaseDLL.7z
+        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc140_x64_Dev.7z --output Dev.7z
+        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc140_x64_ReleaseDLL.7z --output ReleaseDLL.7z
         7z x headers.7z
         7z x Dev.7z
         7z x ReleaseDLL.7z
