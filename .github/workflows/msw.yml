@@ -12,6 +12,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Install wxWidgets3.0.5
+      run: |
+        cd D:\
+        mkdir wx\3.0.5
+        cd wx\3.0.5
+        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxWidgets-3.0.5-headers.7z --output wxWidgets-3.0.5-headers.7z
+        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_Dev.7z --output wxMSW-3.0.5_vc142_Dev.7z
+        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_ReleaseDLL.7z --output wxMSW-3.0.5_vc142_ReleaseDLL.7z
+        7z x wxWidgets-3.0.5-headers.7z
+
     - name: Checkout submodules
       run: |
         git submodule sync --recursive
