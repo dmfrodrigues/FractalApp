@@ -15,9 +15,6 @@ jobs:
     - name: Install wxWidgets
       run: sudo apt install -y libwxgtk3.0-dev
 
-    - name: Install CMake
-      run: sudo apt install -y cmake
-
     - name: Checkout submodules
       shell: bash
       run: |
