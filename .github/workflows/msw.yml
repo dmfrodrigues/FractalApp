@@ -21,6 +21,8 @@ jobs:
         curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_Dev.7z --output wxMSW-3.0.5_vc142_Dev.7z
         curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_ReleaseDLL.7z --output wxMSW-3.0.5_vc142_ReleaseDLL.7z
         7z x wxWidgets-3.0.5-headers.7z
+        7z x wxMSW-3.0.5_vc142_Dev.7z
+        7z x wxMSW-3.0.5_vc142_ReleaseDLL.7z
 
     - name: Checkout submodules
       run: |
