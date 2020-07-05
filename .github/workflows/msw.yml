@@ -12,7 +12,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    steps:
     - name: Checkout submodules
       uses: srt32/git-actions@v0.0.3
       with:
