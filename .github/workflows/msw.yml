@@ -1,0 +1,36 @@
+name: msw
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    steps:
+    - name: Checkout submodules
+      uses: srt32/git-actions@v0.0.3
+      with:
+        args: git submodule update --init --recursive
+    
+    - name: cmake
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+
+    - name: build
+      run: |
+        cd build
+        cmake --build . --config Release
+
+    - name: check build
+      run: |
+        dir
+        cd lib
+        dir
