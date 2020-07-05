@@ -23,7 +23,7 @@ jobs:
         curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_gcc810_ReleaseDLL.7z --output ReleaseDLL.7z
         7z x headers.7z
         7z x Dev.7z
-        7z x ReleaseDLL.7z
+        7z x ReleaseDLL.7z -y
         echo ::set-env name=wxwin::C:\wx\3.0.5
 
     - name: Checkout submodules
