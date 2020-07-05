@@ -2,7 +2,7 @@ name: msw-msvc
 
 on:
   push:
-    branches: [ master, msw-action ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
