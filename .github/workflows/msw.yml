@@ -29,7 +29,7 @@ jobs:
         dir include\wx
         dir lib
         dir lib\vc142_dll
-        echo "::set-env name=wxwin::C:\wx\3.0.5"
+        echo ::set-env name=wxwin::C:\wx\3.0.5
 
     - name: Checkout submodules
       shell: cmd
