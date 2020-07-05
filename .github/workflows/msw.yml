@@ -30,7 +30,7 @@ jobs:
         dir
         cd ..
         echo %PATH%
-        echo "::add-path::D:\wx\3.0.5"
+        echo "##[add-path]D:\wx\3.0.5"
         echo %PATH%
 
     - name: Checkout submodules
