@@ -17,7 +17,10 @@ target_link_libraries(
     ${wxWidgets_LIBRARIES}
     )
 
-set(CPP_COMPILER_WARNINGS -Wall -Wunused-result -pedantic-errors -Wextra -Wcast-align -Wcast-qual -Wchar-subscripts
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    message(STATUS "GCC detected, adding compile flags")
+    set(CPP_COMPILER_OPTIMIZE -ffast-math -O3)
+    set(CPP_COMPILER_WARNINGS -Wall -Wunused-result -pedantic-errors -Wextra -Wcast-align -Wcast-qual -Wchar-subscripts
                           -Wcomment -Wconversion -Wdisabled-optimization -Wfloat-equal  -Wformat  -Wformat=2
                           -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wimport -Winit-self -Winvalid-pch
                           -Wmissing-braces -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs
@@ -26,7 +29,14 @@ set(CPP_COMPILER_WARNINGS -Wall -Wunused-result -pedantic-errors -Wextra -Wcast-
                           -Wswitch  -Wswitch-default -Wswitch-enum -Wtrigraphs  -Wuninitialized -Wunknown-pragmas 
                           -Wunreachable-code -Wunused -Wunused-function  -Wunused-label  -Wunused-parameter
                           -Wunused-value  -Wunused-variable  -Wvariadic-macros -Wvolatile-register-var  -Wwrite-strings)
+    target_compile_options(fractalapp PRIVATE -g ${CPP_COMPILER_WARNINGS} ${CPP_COMPILER_OPTIMIZE})
+endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
-set(CPP_COMPILER_OPTIMIZE -ffast-math -O3)
-
-target_compile_options(fractalapp PRIVATE -g ${CPP_COMPILER_WARNINGS} ${CPP_COMPILER_OPTIMIZE})
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    message(STATUS "MSVC detected, adding compile flags")
+    set(CPP_COMPILER_OPTIMIZE /O2 /GL)
+    set(CPP_LINKER_OPTIMIZE /LTCG)
+    set(CPP_COMPILER_WARNINGS /W4 /wd4068)
+    target_compile_options(fractalapp PRIVATE ${CPP_COMPILER_WARNINGS} ${CPP_COMPILER_OPTIMIZE})
+    target_link_options(fractalapp PRIVATE ${CPP_LINKER_OPTIMIZE})
+endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
