@@ -1,4 +1,4 @@
-name: msw
+name: msw-msvc
 
 on:
   push:
