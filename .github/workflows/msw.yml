@@ -29,7 +29,9 @@ jobs:
         cd ..\lib
         dir
         cd ..
-        set PATH=%PATH%;D:\wx\3.0.5
+        echo %PATH%
+        echo "::add-path::D:\wx\3.0.5"
+        echo %PATH%
 
     - name: Checkout submodules
       run: |
@@ -38,6 +40,7 @@ jobs:
     
     - name: cmake
       run: |
+        echo %PATH%
         mkdir build
         cd build
         cmake ..
