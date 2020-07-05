@@ -42,7 +42,7 @@ jobs:
         echo wxwin: %wxwin%
         mkdir build
         cd build
-        cmake .. -G "MinGW Makefiles" -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_x64_dll
+        cmake .. -G "MinGW Makefiles" -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_dll
 
     - name: build
       shell: cmd
