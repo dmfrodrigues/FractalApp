@@ -2,7 +2,7 @@ name: windows-mingw
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, mingw-action ]
   pull_request:
     branches: [ master ]
 
@@ -19,6 +19,7 @@ jobs:
         mkdir mingw-w64
         cd mingw-w64
         curl -L --insecure https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z --output x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
+        dir
 
     - name: Install wxWidgets3.0.5
       shell: cmd
