@@ -1,4 +1,4 @@
-name: msw-msvc
+name: windows-mingw
 
 on:
   push:
@@ -19,16 +19,11 @@ jobs:
         mkdir wx\3.0.5
         cd wx\3.0.5
         curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxWidgets-3.0.5-headers.7z --output headers.7z
-        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_x64_Dev.7z --output Dev.7z
-        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_x64_ReleaseDLL.7z --output ReleaseDLL.7z
+        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_gcc810_Dev.7z --output Dev.7z
+        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_gcc810_ReleaseDLL.7z --output ReleaseDLL.7z
         7z x headers.7z
         7z x Dev.7z
         7z x ReleaseDLL.7z
-        dir .
-        dir include
-        dir include\wx
-        dir lib
-        dir lib\vc142_x64_dll
         echo ::set-env name=wxwin::C:\wx\3.0.5
 
     - name: Checkout submodules
@@ -43,7 +38,7 @@ jobs:
         echo wxwin: %wxwin%
         mkdir build
         cd build
-        cmake ..
+        cmake .. -G "MinGW Makefiles"
 
     - name: build
       shell: cmd
@@ -55,5 +50,4 @@ jobs:
       shell: cmd
       run: |
         dir
-        cd lib
-        dir
+        dir lib

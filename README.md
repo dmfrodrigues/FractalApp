@@ -3,7 +3,8 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ![ubuntu-gnu](https://github.com/dmfrodrigues/fractal-app/workflows/ubuntu-gnu/badge.svg)
-![msw-msvc](https://github.com/dmfrodrigues/fractal-app/workflows/msw-msvc/badge.svg)
+![windows-msvc](https://github.com/dmfrodrigues/fractal-app/workflows/windows-msvc/badge.svg)
+![windows-mingw](https://github.com/dmfrodrigues/fractal-app/workflows/windows-mingw/badge.svg)
 
 Provides an easy interface to plot fractals.
 
