@@ -23,6 +23,13 @@ jobs:
         7z x wxWidgets-3.0.5-headers.7z
         7z x wxMSW-3.0.5_vc142_Dev.7z
         7z x wxMSW-3.0.5_vc142_ReleaseDLL.7z
+        dir
+        cd include
+        dir 
+        cd ..\lib
+        dir
+        cd ..
+        set PATH=%PATH%;D:\wx\3.0.5
 
     - name: Checkout submodules
       run: |
