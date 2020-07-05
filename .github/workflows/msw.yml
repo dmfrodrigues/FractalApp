@@ -13,47 +13,45 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install wxWidgets3.0.5
+      shell: cmd
       run: |
-        cd C:\
+        C:
         mkdir wx\3.0.5
         cd wx\3.0.5
-        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxWidgets-3.0.5-headers.7z --output wxWidgets-3.0.5-headers.7z
-        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_Dev.7z --output wxMSW-3.0.5_vc142_Dev.7z
-        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_ReleaseDLL.7z --output wxMSW-3.0.5_vc142_ReleaseDLL.7z
-        7z x wxWidgets-3.0.5-headers.7z
-        7z x wxMSW-3.0.5_vc142_Dev.7z
-        7z x wxMSW-3.0.5_vc142_ReleaseDLL.7z
-        dir
-        cd include
-        dir 
-        cd ..\lib
-        dir
-        cd ..
-        $Env:Path
-        echo "::set-env name=wxwin::C:\wx\3.0.5"
-        echo "::add-path::C:\wx\3.0.5"
-        $Env:Path
-        $Env:wxwin
-
+        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxWidgets-3.0.5-headers.7z --output headers.7z
+        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_Dev.7z --output Dev.7z
+        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_ReleaseDLL.7z --output ReleaseDLL.7z
+        7z x headers.7z
+        7z x Dev.7z
+        7z x ReleaseDLL.7z
+        dir .
+        dir include
+        dir include\wx
+        dir lib
+        dir lib\vc142_dll
+        set wxwin=C:\wx\3.0.5
+        
     - name: Checkout submodules
+      shell: cmd
       run: |
         git submodule sync --recursive
         git submodule update --init --force --recursive --depth=1
     
     - name: cmake
+      shell: cmd
       run: |
-        $Env:Path
-        $Env:wxwin
         mkdir build
         cd build
         cmake ..
 
     - name: build
+      shell: cmd
       run: |
         cd build
         cmake --build . --config Release
 
     - name: check build
+      shell: cmd
       run: |
         dir
         cd lib
