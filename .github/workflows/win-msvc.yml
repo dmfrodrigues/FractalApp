@@ -38,16 +38,13 @@ jobs:
         mkdir build
         cd build
         cmake ..
-
-    - name: build
-      shell: cmd
-      run: |
-        cd build
         cmake --build . --config Release
 
     - name: check build
       shell: cmd
       run: |
-        dir
-        cd lib
-        dir
+        cd examples
+        mkdir build
+        cd build
+        cmake ..
+        cmake --build . --config Release

@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(fractalapp-example)
 
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR} )
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 add_subdirectory(.. build)
 
@@ -11,7 +12,11 @@ find_package(wxWidgets COMPONENTS core base REQUIRED)
 include_directories(../include)
 include(${wxWidgets_USE_FILE})
 
-add_executable(fractalapp-example FractalApp.cpp)
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    add_executable(fractalapp-example WIN32 FractalApp.cpp)
+else("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    add_executable(fractalapp-example FractalApp.cpp)
+endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     message(STATUS "GCC detected, adding compile flags")
