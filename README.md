@@ -4,9 +4,10 @@
 
 [![ubuntu-gnu](https://github.com/dmfrodrigues/fractal-app/workflows/ubuntu-gnu/badge.svg)](.github/workflows/ubuntu-gnu)
 [![win-msvc](https://github.com/dmfrodrigues/fractal-app/workflows/win-msvc/badge.svg)](.github/workflows/win-msvc)
+[![win-mingw32-wx32](https://github.com/dmfrodrigues/fractal-app/workflows/win-mingw32-wx32/badge.svg)](.github/workflows/win-mingw32-wx32)
 [![win-mingw32-wx64](https://github.com/dmfrodrigues/fractal-app/workflows/win-mingw32-wx64/badge.svg)](.github/workflows/win-mingw32-wx64)
-[![win-mingw64-wx64](https://github.com/dmfrodrigues/fractal-app/workflows/win-mingw64-wx64/badge.svg)](.github/workflows/win-mingw64-wx64)
 [![win-mingw64-wx32](https://github.com/dmfrodrigues/fractal-app/workflows/win-mingw64-wx32/badge.svg)](.github/workflows/win-mingw64-wx32)
+[![win-mingw64-wx64](https://github.com/dmfrodrigues/fractal-app/workflows/win-mingw64-wx64/badge.svg)](.github/workflows/win-mingw64-wx64)
 
 Provides an easy interface to plot fractals.
 
