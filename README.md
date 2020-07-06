@@ -4,7 +4,6 @@
 
 ![ubuntu-gnu](https://github.com/dmfrodrigues/fractal-app/workflows/ubuntu-gnu/badge.svg)
 ![windows-msvc](https://github.com/dmfrodrigues/fractal-app/workflows/windows-msvc/badge.svg)
-![windows-mingw](https://github.com/dmfrodrigues/fractal-app/workflows/windows-mingw/badge.svg)
 
 Provides an easy interface to plot fractals.
 
