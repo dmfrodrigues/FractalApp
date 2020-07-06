@@ -1,4 +1,4 @@
-name: windows-mingw
+name: win-mingw
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: win-latest
     steps:
     - uses: actions/checkout@v2
 
