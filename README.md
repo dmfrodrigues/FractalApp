@@ -4,6 +4,7 @@
 
 ![ubuntu-gnu](https://github.com/dmfrodrigues/fractal-app/workflows/ubuntu-gnu/badge.svg)
 ![windows-msvc](https://github.com/dmfrodrigues/fractal-app/workflows/windows-msvc/badge.svg)
+![windows-mingw](https://github.com/dmfrodrigues/fractal-app/workflows/windows-mingw/badge.svg)
 
 Provides an easy interface to plot fractals.
 
@@ -20,9 +21,7 @@ This library has a CMake file that can be used to compile it using whichever com
   * Latest version of *MSVC* made available by GitHub Actions (*Visual Studio 16 2019*, compiler identification `MSVC 19.26.28806.0`)
   * Corresponding version of *wxMSW3.0* binaries available at the [official website](https://www.wxwidgets.org/) ([*wxWidgets 3.0.5*](https://www.wxwidgets.org/downloads/) ported to MSW). Since we use VS2019 (and apparently CMake defaults to a 64bit version), we downloaded the VS2019 64-Bit (`x86_64`) [developer files](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_x64_Dev.7z) and [release DLLs](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_x64_ReleaseDLL.7z).
 
-For further information on how to compile using [GNU G++](.github/workflows/ubuntu-gnu) or [Microsoft Visual C++](.github/workflows/windows-msvc) you can check their respective workflow files.
-
-* **MinGW-W64** under Microsoft Windows, using:
+* ![windows-mingw](https://github.com/dmfrodrigues/fractal-app/workflows/windows-mingw/badge.svg) **MinGW-W64** under Microsoft Windows, using:
   * MinGW-W64 8.1, architecture `x86_64` (64bit), `posix` threads and `seh` exceptions. To get it you can go to [SourgeForge](https://sourceforge.net/projects/mingw-w64/files/) to:
     - Download the [executable installer](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe) and choose the appropriate settings.
     - Or by simply downloading the binaries [MinGW-W64 GCC-8.1.0 `x86_64-posix-seh`](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z) and unzipping them.
@@ -50,7 +49,9 @@ Assuming:
 - you downloaded the MinGW-w64 8.1 64bit binaries for wxWidgets, and unzipped them so that the `C:\wx\3.0.5\lib` folder now has a folder `gcc810_x64_dll` inside it
 - You used the `x86_64-posix-seh` binaries
 
-you can run `cmake .. -G "MinGW Makefiles" -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_x64_dll`.
+you can run `cmake .. -G "MinGW Makefiles" -DWX_ROOT_DIR:PATH=C:\wx\3.0.5 -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_x64_dll` (or alternatively run `cmake .. -G "MinGW Makefiles" -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_x64_dll` twice so as to appretiate the arbitrary workings of `FindwxWidgets`).
+
+For further information on how to compile using [GNU G++](.github/workflows/ubuntu-gnu), [Microsoft Visual C++](.github/workflows/windows-msvc) or [MinGW-W64](.github/workflows/windows-mingw) you can check their respective workflow files.
 
 ## Using
 
