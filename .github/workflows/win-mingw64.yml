@@ -1,4 +1,4 @@
-name: win-mingw
+name: win-mingw64
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install MinGW binary
+    - name: Install MinGW64 binary
       shell: cmd
       run: |
         C:
