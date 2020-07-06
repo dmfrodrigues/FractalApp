@@ -1,4 +1,4 @@
-name: win-mingw32-wx64
+name: win-mingw32-wx32
 
 on:
   push:
