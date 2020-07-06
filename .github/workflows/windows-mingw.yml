@@ -2,7 +2,7 @@ name: windows-mingw
 
 on:
   push:
-    branches: [ master, mingw-action ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
