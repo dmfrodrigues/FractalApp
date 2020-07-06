@@ -2,9 +2,9 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-![ubuntu-gnu](https://github.com/dmfrodrigues/fractal-app/workflows/ubuntu-gnu/badge.svg)
-![windows-msvc](https://github.com/dmfrodrigues/fractal-app/workflows/windows-msvc/badge.svg)
-![windows-mingw](https://github.com/dmfrodrigues/fractal-app/workflows/windows-mingw/badge.svg)
+[![ubuntu-gnu](https://github.com/dmfrodrigues/fractal-app/workflows/ubuntu-gnu/badge.svg)](.github/workflows/ubuntu-gnu)
+[![windows-msvc](https://github.com/dmfrodrigues/fractal-app/workflows/windows-msvc/badge.svg)](.github/workflows/windows-msvc)
+[![windows-mingw](https://github.com/dmfrodrigues/fractal-app/workflows/windows-mingw/badge.svg)](.github/workflows/windows-mingw)
 
 Provides an easy interface to plot fractals.
 
@@ -14,21 +14,13 @@ This project makes use of the [wxWidgets](https://www.wxwidgets.org/) library, v
 
 This library has a CMake file that can be used to compile it using whichever compiler you prefer. It is guaranteed to work with:
 
-* ![ubuntu-gnu](https://github.com/dmfrodrigues/fractal-app/workflows/ubuntu-gnu/badge.svg) **GNU G++** under Debian/Ubuntu, using:
-  * Latest version of *GNU GCC* available via `apt` ([GNU GCC 7.5.0](https://gcc.gnu.org/gcc-7/))
-  * Latest version of *wxGTK3.0* available via `apt` ([*wxWidgets 3.0.5*](https://www.wxwidgets.org/downloads/) ported to GTK, corresponding to package `libwxgtk3.0-dev`)
-* ![windows-msvc](https://github.com/dmfrodrigues/fractal-app/workflows/windows-msvc/badge.svg) **Microsoft Visual C++** under Microsoft Windows, using:
-  * Latest version of *MSVC* made available by GitHub Actions (*Visual Studio 16 2019*, compiler identification `MSVC 19.26.28806.0`)
-  * Corresponding version of *wxMSW3.0* binaries available at the [official website](https://www.wxwidgets.org/) ([*wxWidgets 3.0.5*](https://www.wxwidgets.org/downloads/) ported to MSW). Since we use VS2019 (and apparently CMake defaults to a 64bit version), we downloaded the VS2019 64-Bit (`x86_64`) [developer files](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_x64_Dev.7z) and [release DLLs](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_x64_ReleaseDLL.7z).
+| Workflow | Compiler suite | wxWidgets version |
+|----------|----------------|-------------------|
+| [![ubuntu-gnu](https://github.com/dmfrodrigues/fractal-app/workflows/ubuntu-gnu/badge.svg)](.github/workflows/ubuntu-gnu) **GNU G++** under Debian/Ubuntu | Latest version of *GNU GCC* available via `apt` ([GNU GCC 7.5.0](https://gcc.gnu.org/gcc-7/)) | Latest version of *wxGTK3.0* available via `apt` ([*wxWidgets 3.0.5*](https://www.wxwidgets.org/downloads/) ported to GTK, corresponding to package `libwxgtk3.0-dev`). |
+| [![windows-msvc](https://github.com/dmfrodrigues/fractal-app/workflows/windows-msvc/badge.svg)](.github/workflows/windows-msvc) **Microsoft Visual C++** under Microsoft Windows | Latest version of *MSVC* made available by GitHub Actions (*Visual Studio 16 2019*, compiler identification `MSVC 19.26.28806.0`) | Corresponding version of *wxMSW3.0* binaries available at the [official website](https://www.wxwidgets.org/) ([*wxWidgets 3.0.5*](https://www.wxwidgets.org/downloads/) ported to MSW). Since we use VS2019 (and apparently CMake defaults to a 64bit version), we downloaded the VS2019 64-Bit (`x86_64`) [developer files](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_x64_Dev.7z) and [release DLLs](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_x64_ReleaseDLL.7z). |
+| [![windows-mingw](https://github.com/dmfrodrigues/fractal-app/workflows/windows-mingw/badge.svg)](.github/workflows/windows-mingw) **MinGW-W64** under Microsoft Windows | MinGW-W64 8.1, architecture `x86_64` (64bit), `posix` threads and `seh` exceptions (use [installer](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe) and select right settings, or download [MinGW-W64 GCC-8.1.0 `x86_64-posix-seh`](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z)). | Corresponding version of *wxMSW3.0* binaries available at the [official website](https://www.wxwidgets.org/) ([*wxWidgets 3.0.5*](https://www.wxwidgets.org/downloads/) ported to MSW). Since we use MinGW-W64 64bit, and the settings we chose (`posix` threads and `seh` exceptions) are [compatible](https://github.com/wxWidgets/wxWidgets/releases/tag/v3.0.5/) with *wxMSW MinGW-w64 64-Bit* (`x86_64`) binary files, we downloaded the *MinGW-w64 64-Bit* [developer files](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_gcc810_x64_Dev.7z) and [release DLLs](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_gcc810_x64_ReleaseDLL.7z). |
 
-* ![windows-mingw](https://github.com/dmfrodrigues/fractal-app/workflows/windows-mingw/badge.svg) **MinGW-W64** under Microsoft Windows, using:
-  * MinGW-W64 8.1, architecture `x86_64` (64bit), `posix` threads and `seh` exceptions. To get it you can go to [SourgeForge](https://sourceforge.net/projects/mingw-w64/files/) to:
-    - Download the [executable installer](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe) and choose the appropriate settings.
-    - Or by simply downloading the binaries [MinGW-W64 GCC-8.1.0 `x86_64-posix-seh`](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z) and unzipping them.
-
-  * Corresponding version of *wxMSW3.0* binaries available at the [official website](https://www.wxwidgets.org/) ([*wxWidgets 3.0.5*](https://www.wxwidgets.org/downloads/) ported to MSW). Since we use MinGW-W64 64bit, and the settings we chose (`posix` threads and `seh` exceptions) are [compatible](https://github.com/wxWidgets/wxWidgets/releases/tag/v3.0.5/) with the wxMSW MinGW-w64 64-Bit (`x86_64`) binary files, we downloaded the MinGW-w64 64-Bit [developer files](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_gcc810_x64_Dev.7z) and [release DLLs](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_gcc810_x64_ReleaseDLL.7z).
-
-For this case, it is likely that (just as it happened to me) `cmake` fails to find the library, giving an error like:
+If you use MinGW-W64, it is likely that (just as it happened to me) `cmake` fails to find the library, giving an error like:
 
 ```
 CMake Error at C:/cmake-3.17.3-win64-x64/share/cmake-3.17/Modules/FindPackageHandleStandardArgs.cmake:164 (message):
@@ -51,7 +43,7 @@ Assuming:
 
 you can run `cmake .. -G "MinGW Makefiles" -DWX_ROOT_DIR:PATH=C:\wx\3.0.5 -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_x64_dll` (or alternatively run `cmake .. -G "MinGW Makefiles" -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_x64_dll` twice so as to appretiate the arbitrary workings of `FindwxWidgets`).
 
-For further information on how to compile using [GNU G++](.github/workflows/ubuntu-gnu), [Microsoft Visual C++](.github/workflows/windows-msvc) or [MinGW-W64](.github/workflows/windows-mingw) you can check their respective workflow files.
+For further information on how to compile using a certain environment, click the respective badge.
 
 ## Using
 
