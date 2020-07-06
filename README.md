@@ -7,35 +7,29 @@
 
 Provides an easy interface to plot fractals.
 
-This project makes use of the [wxWidgets](https://www.wxwidgets.org/) library, version [3.0.4](https://www.wxwidgets.org/downloads/).
+This project makes use of the [wxWidgets](https://www.wxwidgets.org/) library, version [3.0.5](https://www.wxwidgets.org/downloads/).
 
 ## Compiling
 
-The project is guaranteed to compile with:
-* **GNU G++** under Ubuntu
-* **Microsoft Visual C++** under Microsoft Windows
-* **MinGW-W64** under Microsoft Windows
+This library has a CMake file that can be used to compile it using whichever compiler you prefer. It is guaranteed to work with:
 
-To compile using [GNU G++](.github/workflows/ubuntu-gnu) or [Microsoft Visual C++](.github/workflows/windows-msvc) check their respective workflow files.
+* ![ubuntu-gnu](https://github.com/dmfrodrigues/fractal-app/workflows/ubuntu-gnu/badge.svg) **GNU G++** under Debian/Ubuntu, using:
+  * Latest version of *GNU GCC* available via `apt` ([GNU GCC 7.5.0](https://gcc.gnu.org/gcc-7/))
+  * Latest version of *wxGTK3.0* available via `apt` ([*wxWidgets 3.0.5*](https://www.wxwidgets.org/downloads/) ported to GTK, corresponding to package `libwxgtk3.0-dev`)
+* ![windows-msvc](https://github.com/dmfrodrigues/fractal-app/workflows/windows-msvc/badge.svg) **Microsoft Visual C++** under Microsoft Windows, using:
+  * Latest version of *MSVC* made available by GitHub Actions (*Visual Studio 16 2019*, compiler identification `MSVC 19.26.28806.0`)
+  * Corresponding version of *wxMSW3.0* binaries available at the [official website](https://www.wxwidgets.org/) ([*wxWidgets 3.0.5*](https://www.wxwidgets.org/downloads/) ported to MSW). Since we use VS2019 (and apparently CMake defaults to a 64bit version), we downloaded the VS2019 64-Bit (`x86_64`) [developer files](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_x64_Dev.7z) and [release DLLs](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_x64_ReleaseDLL.7z).
 
-### Under MinGW-W64
+For further information on how to compile using [GNU G++](.github/workflows/ubuntu-gnu) or [Microsoft Visual C++](.github/workflows/windows-msvc) you can check their respective workflow files.
 
-This particular case is very useful, given this package's wide reputation. However, because SourceForge sucks, I was not able to automate testing for this package.
+* **MinGW-W64** under Microsoft Windows, using:
+  * MinGW-W64 8.1, architecture `x86_64` (64bit), `posix` threads and `seh` exceptions. To get it you can go to [SourgeForge](https://sourceforge.net/projects/mingw-w64/files/) to:
+    - Download the [executable installer](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe) and choose the appropriate settings.
+    - Or by simply downloading the binaries [MinGW-W64 GCC-8.1.0 `x86_64-posix-seh`](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z) and unzipping them.
 
-Nevertheless, here are the instructions to compile this project using MinGW-W64:
-- Download wxWidgets binaries for the latest stable release from the [downloads page](https://www.wxwidgets.org/downloads/), following [these instructions](https://docs.wxwidgets.org/trunk/plat_msw_binaries.html), namely:
-    - In the downloads page choose a MinGW-w64 version and choose the 32bit or 64bit version.
-    - For that version and bit size, download the header files, development files and release DLLs to the same folder.
-    - Unzip all of them in the same directory, ending up with two folders: `include` and `lib`.
-- Install [MinGW-W64 from SourceForge](https://sourceforge.net/projects/mingw-w64/files/)
-    - Using the [executable](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe) to download a compatible version; you should match the version numbers (if the wxWidgets binaries you downloaded were made using MinGW-w64 8.1 you're going to download version `8.1.x`) and take into consideration the following details:
-        - For 64bit wxWidgets, the MinGW-W64 package must be of architecture `x86_64`, with `posix` threads and `seh` exceptions
-        - For 32bit wxWidgets, the MinGW-W64 package must be of architecture `i686`, with `posix` threads and `sjlj` exceptions
-    -  By simply downloading the binaries [`x86_64-posix-seh`](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z) and unzipping them
-- Look for the `bin` folder and include it in `PATH`
-- Now you can compile the project; in the project base directory, create a folder `build`, `cd` to it and run `cmake .. -G "MinGW Makefiles"`
+  * Corresponding version of *wxMSW3.0* binaries available at the [official website](https://www.wxwidgets.org/) ([*wxWidgets 3.0.5*](https://www.wxwidgets.org/downloads/) ported to MSW). Since we use MinGW-W64 64bit, and the settings we chose (`posix` threads and `seh` exceptions) are [compatible](https://github.com/wxWidgets/wxWidgets/releases/tag/v3.0.5/) with the wxMSW MinGW-w64 64-Bit (`x86_64`) binary files, we downloaded the MinGW-w64 64-Bit [developer files](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_gcc810_x64_Dev.7z) and [release DLLs](https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_gcc810_x64_ReleaseDLL.7z).
 
-It is likely that (just as it happened to me) `cmake` fails to find the library, giving an error like:
+For this case, it is likely that (just as it happened to me) `cmake` fails to find the library, giving an error like:
 
 ```
 CMake Error at C:/cmake-3.17.3-win64-x64/share/cmake-3.17/Modules/FindPackageHandleStandardArgs.cmake:164 (message):
@@ -58,14 +52,12 @@ Assuming:
 
 you can run `cmake .. -G "MinGW Makefiles" -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_x64_dll`.
 
-## Using the project
+## Using
 
-To use this project, you need to do two things:
+To use this project, you need to:
 
-1. Create your own class and inherit it from [FractalBitmap](include/FractalBitmap.h) (you should follow the orientations in [FractalBitmap.h](include/FractalBitmap.h) documentation)
+1. Create your own class and inherit it from [FractalBitmap](include/FractalBitmap.h), implementing the pure virtual functions so your class can be instantiated (follow the guidelines in [FractalBitmap.h](include/FractalBitmap.h) documentation blocks)
 
 2. Create a main source file similar to [FractalApp.cpp](FractalApp.cpp).
 
-Documentation is available in the header/source where needed, or will be added soon.
-
-You can check [dmfrodrigues/Mandelbrot](https://github.com/dmfrodrigues/Mandelbrot) for a working sample using FractalApp.
+You can check [dmfrodrigues/mandelbrot](https://github.com/dmfrodrigues/mandelbrot) for a working sample using FractalApp.
