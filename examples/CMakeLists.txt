@@ -37,4 +37,4 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     target_link_options(fractalapp-example PRIVATE ${CPP_LINKER_OPTIMIZE})
 endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 
-target_link_libraries(${PROJECT_NAME} fractalapp ${wxWidgets_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} fractalapp)

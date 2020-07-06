@@ -12,6 +12,8 @@ include(${wxWidgets_USE_FILE})
 
 add_library(fractalapp STATIC CURSOR_CROSS.cpp FractalBitmap.cpp FractalFrame.cpp FractalPanel.cpp HDPrintscreenDialog.cpp InfoPanel.cpp)
 
+target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
+
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     message(STATUS "GCC detected, adding compile flags")
     set(CPP_COMPILER_OPTIMIZE -ffast-math -O3)
