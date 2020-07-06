@@ -16,15 +16,18 @@ jobs:
       shell: cmd
       run: |
         C:
+        cd C:\
         mkdir mingw-w64
         cd mingw-w64
         curl -L --insecure https://www.dropbox.com/s/2vlr813fjmyhp1r/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z?dl=1 --output x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
-        dir
+        7z x x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z -y -ox86_64-8.1.0-release-posix-seh-rt_v6-rev0
+        echo ::add-path::C:\mingw-w64\x86_64-8.1.0-release-posix-seh-rt_v6-rev0\mingw64\bin
 
     - name: Install wxWidgets3.0.5
       shell: cmd
       run: |
         C:
+        cd C:\
         mkdir wx\3.0.5
         cd wx\3.0.5
         curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxWidgets-3.0.5-headers.7z           --output wxWidgets-3.0.5-headers.7z
@@ -52,7 +55,7 @@ jobs:
         where g++
         mkdir build
         cd build
-        cmake .. -G "MinGW Makefiles" -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_dll
+        cmake .. -G "MinGW Makefiles" -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_x64_dll
 
     - name: build
       shell: cmd
