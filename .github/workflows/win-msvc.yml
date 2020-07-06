@@ -35,8 +35,6 @@ jobs:
     - name: cmake
       shell: cmd
       run: |
-        echo wxwin: %wxwin%
-        mkdir build
         cd build
         cmake ..
 

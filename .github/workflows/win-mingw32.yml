@@ -47,8 +47,6 @@ jobs:
     - name: cmake
       shell: cmd
       run: |
-        echo wxwin: %wxwin%
-        where g++
         mkdir build
         cd build
         cmake .. -G "MinGW Makefiles" -DWX_ROOT_DIR:PATH=C:\wx\3.0.5 -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_x64_dll
