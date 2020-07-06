@@ -1,16 +1,17 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(fractalapp)
+project(fractalapp-example)
 
-set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../lib )
-set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY})
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR} )
+
+add_subdirectory(.. build)
 
 find_package(wxWidgets COMPONENTS core base REQUIRED)
 
 include_directories(../include)
 include(${wxWidgets_USE_FILE})
 
-add_library(fractalapp STATIC CURSOR_CROSS.cpp FractalBitmap.cpp FractalFrame.cpp FractalPanel.cpp HDPrintscreenDialog.cpp InfoPanel.cpp)
+add_executable(fractalapp-example FractalApp.cpp)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     message(STATUS "GCC detected, adding compile flags")
@@ -21,10 +22,10 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
                           -Wmissing-braces -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs
                           -Wmissing-noreturn -Wpacked -Wparentheses  -Wpointer-arith -Wredundant-decls -Wreturn-type
                           -Wsequence-point  -Wshadow -Wsign-compare  -Wstack-protector -Wstrict-aliasing -Wstrict-aliasing=2
-                          -Wswitch  -Wswitch-default -Wswitch-enum -Wtrigraphs  -Wuninitialized -Wno-unknown-pragmas 
+                          -Wswitch  -Wswitch-default -Wswitch-enum -Wtrigraphs  -Wuninitialized -Wunknown-pragmas 
                           -Wunreachable-code -Wunused -Wunused-function  -Wunused-label  -Wunused-parameter
                           -Wunused-value  -Wunused-variable  -Wvariadic-macros -Wvolatile-register-var  -Wwrite-strings)
-    target_compile_options(fractalapp PRIVATE -g ${CPP_COMPILER_WARNINGS} ${CPP_COMPILER_OPTIMIZE})
+    target_compile_options(fractalapp-example PRIVATE -g ${CPP_COMPILER_WARNINGS} ${CPP_COMPILER_OPTIMIZE})
 endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
@@ -32,6 +33,8 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     set(CPP_COMPILER_OPTIMIZE /O2 /GL)
     set(CPP_LINKER_OPTIMIZE /LTCG)
     set(CPP_COMPILER_WARNINGS /W4 /wd4068)
-    target_compile_options(fractalapp PRIVATE ${CPP_COMPILER_WARNINGS} ${CPP_COMPILER_OPTIMIZE})
-    target_link_options(fractalapp PRIVATE ${CPP_LINKER_OPTIMIZE})
+    target_compile_options(fractalapp-example PRIVATE ${CPP_COMPILER_WARNINGS} ${CPP_COMPILER_OPTIMIZE})
+    target_link_options(fractalapp-example PRIVATE ${CPP_LINKER_OPTIMIZE})
 endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+
+target_link_libraries(${PROJECT_NAME} fractalapp ${wxWidgets_LIBRARIES})
