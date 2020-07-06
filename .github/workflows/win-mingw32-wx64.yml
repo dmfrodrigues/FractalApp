@@ -1,4 +1,4 @@
-name: win-mingw32
+name: win-mingw32-wx64
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install MinGW32 binary
+    - name: Install MinGW-W64 i686
       shell: cmd
       run: |
         C:
@@ -23,7 +23,7 @@ jobs:
         7z x i686-8.1.0-release-posix-sjlj-rt_v6-rev0.7z -y -oi686-8.1.0-release-posix-sjlj-rt_v6-rev0
         echo ::add-path::C:\mingw-w64\i686-8.1.0-release-posix-sjlj-rt_v6-rev0\mingw32\bin
 
-    - name: Install wxWidgets3.0.5
+    - name: Install wxWidgets3.0.5 MinGW-w64 8.1 64bit
       shell: cmd
       run: |
         C:
@@ -50,15 +50,4 @@ jobs:
         mkdir build
         cd build
         cmake .. -G "MinGW Makefiles" -DWX_ROOT_DIR:PATH=C:\wx\3.0.5 -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_x64_dll
-
-    - name: build
-      shell: cmd
-      run: |
-        cd build
         cmake --build . --config Release
-
-    - name: check build
-      shell: cmd
-      run: |
-        dir
-        dir lib

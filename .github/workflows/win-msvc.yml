@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install wxWidgets3.0.5
+    - name: Install wxWidgets3.0.5 VS2019 64bit
       shell: cmd
       run: |
         C:

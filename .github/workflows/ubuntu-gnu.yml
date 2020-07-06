@@ -29,12 +29,4 @@ jobs:
         mkdir build
         cd build
         cmake ..
-
-    - name: make
-      run: |
-        cd build
         make
-
-    - name: check make
-      run: |
-        [ -f lib/libfractalapp.a ] || exit 1
