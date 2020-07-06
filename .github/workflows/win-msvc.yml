@@ -32,7 +32,7 @@ jobs:
         git submodule sync --recursive
         git submodule update --init --force --recursive --depth=1
     
-    - name: cmake
+    - name: CMake
       shell: cmd
       run: |
         mkdir build
@@ -40,7 +40,7 @@ jobs:
         cmake ..
         cmake --build . --config Release
 
-    - name: check build
+    - name: Compile example
       shell: cmd
       run: |
         cd examples
