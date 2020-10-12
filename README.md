@@ -6,6 +6,7 @@
 [![win-msvc](https://github.com/dmfrodrigues/fractal-app/workflows/win-msvc/badge.svg)](.github/workflows/win-msvc.yml)
 [![win-mingw32-wx32](https://github.com/dmfrodrigues/fractal-app/workflows/win-mingw32-wx32/badge.svg)](.github/workflows/win-mingw32-wx32.yml)
 [![win-mingw64-wx64](https://github.com/dmfrodrigues/fractal-app/workflows/win-mingw64-wx64/badge.svg)](.github/workflows/win-mingw64-wx64.yml)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/0a3bcc58a7d743bc886a2652a4b1aa2c)](https://www.codacy.com/gh/dmfrodrigues/fractal-app/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dmfrodrigues/fractal-app&amp;utm_campaign=Badge_Grade)
 
 Provides an easy interface to plot fractals.
 
