@@ -21,7 +21,7 @@ jobs:
         cd mingw-w64
         curl -L --insecure https://www.dropbox.com/s/2vlr813fjmyhp1r/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z?dl=1 --output x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
         7z x x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z -y -ox86_64-8.1.0-release-posix-seh-rt_v6-rev0
-        echo ::add-path::C:\mingw-w64\x86_64-8.1.0-release-posix-seh-rt_v6-rev0\mingw64\bin
+        echo "C:\mingw-w64\x86_64-8.1.0-release-posix-seh-rt_v6-rev0\mingw64\bin" >> $GITHUB_PATH
 
     - name: Install wxWidgets3.0.5 MinGW-w64 8.1 64bit
       shell: cmd
@@ -36,7 +36,7 @@ jobs:
         7z x wxWidgets-3.0.5-headers.7z -y
         7z x wxMSW-3.0.5_gcc810_x64_Dev.7z -y
         7z x wxMSW-3.0.5_gcc810_x64_ReleaseDLL.7z -y
-        echo ::set-env name=wxwin::C:\wx\3.0.5
+        echo "wxwin=C:\wx\3.0.5" >> $GITHUB_ENV
 
     - name: Checkout submodules
       shell: cmd
