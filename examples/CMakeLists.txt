@@ -12,7 +12,7 @@ find_package(wxWidgets COMPONENTS core base REQUIRED)
 include_directories(../include)
 include(${wxWidgets_USE_FILE})
 
-    add_executable(fractalapp-example FractalApp.cpp)
+add_executable(fractalapp-example FractalApp.cpp)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     message(STATUS "GCC detected, adding compile flags")
