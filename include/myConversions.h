@@ -4,7 +4,7 @@
 #include <sstream>
 
 template<class T>
-std::string float2str(T n, streamsize no_digits, std::ios_base::fmtflags fmtfl){
+std::string float2str(T n, std::streamsize no_digits, std::ios_base::fmtflags fmtfl){
     std::ostringstream oss;
     oss.flags(fmtfl);
     oss.precision(no_digits);
@@ -13,7 +13,7 @@ std::string float2str(T n, streamsize no_digits, std::ios_base::fmtflags fmtfl){
 }
 
 template<class T>
-std::string float2str(T n, streamsize no_digits){
+std::string float2str(T n, std::streamsize no_digits){
     std::ostringstream oss;
     oss.precision(no_digits);
     oss << n;
