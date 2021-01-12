@@ -12,6 +12,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Create wxwin
+      shell: Powershell
+      run: |
+        echo "wxwin=C:\wx\3.0.5" >> $GITHUB_ENV
+
+    - name: Show wxwin
+      shell: Powershell
+      run: |
+        gci env:* | sort-object name
+
     - name: Install MinGW-W64 x86_64
       shell: cmd
       run: |
@@ -36,16 +46,6 @@ jobs:
         7z x wxWidgets-3.0.5-headers.7z -y
         7z x wxMSW-3.0.5_gcc810_x64_Dev.7z -y
         7z x wxMSW-3.0.5_gcc810_x64_ReleaseDLL.7z -y
-
-    - name: Create wxwin
-      shell: Powershell
-      run: |
-        echo "wxwin=C:\wx\3.0.5" >> $GITHUB_ENV
-
-    - name: Show wxwin
-      shell: Powershell
-      run: |
-        gci env:* | sort-object name
 
     - name: Checkout submodules
       shell: cmd
