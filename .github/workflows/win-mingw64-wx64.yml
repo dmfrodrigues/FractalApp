@@ -45,7 +45,7 @@ jobs:
     - name: Show wxwin
       shell: Powershell
       run: |
-        $env:wxwin
+        gci env:* | sort-object name
 
     - name: Checkout submodules
       shell: cmd
