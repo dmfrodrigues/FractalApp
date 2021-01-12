@@ -30,9 +30,9 @@ jobs:
         cd C:\
         mkdir wx\3.0.5
         cd wx\3.0.5
-        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxWidgets-3.0.5-headers.7z           --output wxWidgets-3.0.5-headers.7z
-        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_gcc810_x64_Dev.7z        --output wxMSW-3.0.5_gcc810_x64_Dev.7z
-        curl -L https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_gcc810_x64_ReleaseDLL.7z --output wxMSW-3.0.5_gcc810_x64_ReleaseDLL.7z
+        curl -L --insecure https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxWidgets-3.0.5-headers.7z           --output wxWidgets-3.0.5-headers.7z
+        curl -L --insecure https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_gcc810_x64_Dev.7z        --output wxMSW-3.0.5_gcc810_x64_Dev.7z
+        curl -L --insecure https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_gcc810_x64_ReleaseDLL.7z --output wxMSW-3.0.5_gcc810_x64_ReleaseDLL.7z
         7z x wxWidgets-3.0.5-headers.7z -y
         7z x wxMSW-3.0.5_gcc810_x64_Dev.7z -y
         7z x wxMSW-3.0.5_gcc810_x64_ReleaseDLL.7z -y
@@ -49,7 +49,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake .. -G "MinGW Makefiles" -DWX_ROOT_DIR:PATH=C:\wx\3.0.5 -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_x64_dll
+        cmake .. -G "MinGW Makefiles" -DWX_ROOT_DIR:PATH=C:/wx/3.0.5 -DwxWidgets_LIB_DIR:PATH=C:/wx/3.0.5/lib/gcc810_x64_dll
         cmake --build . --config Release
 
     - name: Compile example
@@ -58,6 +58,6 @@ jobs:
         cd examples
         mkdir build
         cd build
-        cmake .. -G "MinGW Makefiles" -DWX_ROOT_DIR:PATH=C:\wx\3.0.5 -DwxWidgets_LIB_DIR:PATH=C:\wx\3.0.5\lib\gcc810_x64_dll
+        cmake .. -G "MinGW Makefiles" -DWX_ROOT_DIR:PATH=C:/wx/3.0.5 -DwxWidgets_LIB_DIR:PATH=C:/wx/3.0.5/lib/gcc810_x64_dll
         cmake --build . --config Release
 
