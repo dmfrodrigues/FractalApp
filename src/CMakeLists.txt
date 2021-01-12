@@ -26,7 +26,17 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
                           -Wswitch  -Wswitch-default -Wswitch-enum -Wtrigraphs  -Wuninitialized -Wno-unknown-pragmas 
                           -Wunreachable-code -Wunused -Wunused-function  -Wunused-label  -Wunused-parameter
                           -Wunused-value  -Wunused-variable  -Wvariadic-macros -Wvolatile-register-var  -Wwrite-strings)
-    target_compile_options(fractalapp PRIVATE -g ${CPP_COMPILER_WARNINGS} ${CPP_COMPILER_OPTIMIZE})
+    set(CPP_COMPILER_OPTIONS )
+    if(ARCH)
+        message("ARCH specified")
+        if(ARCH STREQUAL "i686")
+            set(CPP_COMPILER_OPTIONS ${CPP_COMPILER_OPTIONS} -m32)
+        endif()
+        set(CPP_COMPILER_OPTIONS ${CPP_COMPILER_OPTIONS} -march=${ARCH})
+    else()
+        message("ARCH not specified, using native")
+    endif()
+    target_compile_options(fractalapp PRIVATE -g ${CPP_COMPILER_WARNINGS} ${CPP_COMPILER_OPTIMIZE} ${CPP_COMPILER_OPTIONS})
 endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
