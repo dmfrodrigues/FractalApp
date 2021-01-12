@@ -15,11 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Show all env variables
-      shell: Powershell
-      run: |
-        gci env:* | sort-object name
-
     - name: Install MinGW-W64 x86_64
       shell: cmd
       run: |
