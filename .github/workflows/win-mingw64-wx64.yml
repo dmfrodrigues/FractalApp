@@ -6,18 +6,16 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  wxwin: C:\wx\3.0.5
+
 jobs:
   build:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
 
-    - name: Create wxwin
-      shell: Powershell
-      run: |
-        echo "wxwin=C:\wx\3.0.5" >> $GITHUB_ENV
-
-    - name: Show wxwin
+    - name: Show all env variables
       shell: Powershell
       run: |
         gci env:* | sort-object name
