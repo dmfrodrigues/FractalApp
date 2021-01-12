@@ -38,6 +38,11 @@ jobs:
         7z x wxMSW-3.0.5_gcc810_x64_ReleaseDLL.7z -y
         echo "wxwin=C:\wx\3.0.5" >> $GITHUB_ENV
 
+    - name: Check if wxwin is right
+      shell: cmd
+      run: |
+        echo %wxwin%
+
     - name: Checkout submodules
       shell: cmd
       run: |
