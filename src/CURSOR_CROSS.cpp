@@ -81,6 +81,7 @@ static const unsigned char uCROSS_mask[] = {
 static const char *CROSS_bits = reinterpret_cast<const char*>(uCROSS_bits);
 static const char *CROSS_mask = reinterpret_cast<const char*>(uCROSS_mask);
 #ifdef __WXMSW__
+/*
 wxCursor CreateCURSOR_CROSS(){
     wxInitAllImageHandlers();
     wxBitmap CROSS_bitmap(CROSS_bits, 32, 32);
@@ -93,6 +94,7 @@ wxCursor CreateCURSOR_CROSS(){
     return CROSS_cursor;
 }
 const wxCursor CURSOR_CROSS = CreateCURSOR_CROSS();
+*/
 #endif
 #if defined(__WXGTK__) or defined(__WXMOTIF__)
 /*

@@ -1,7 +1,7 @@
 #include "FractalFrame.h"
 
 #ifdef __WXMSW__
-    #include "CURSOR_CROSS.h"
+    // #include "CURSOR_CROSS.h"
 #endif
 
 enum{
@@ -15,7 +15,7 @@ FractalPanel::FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *bmp_)
     ///Initial settings
     /**Cursor*/{
         #ifdef __WXMSW__
-            SetCursor(CURSOR_CROSS);
+            // SetCursor(CURSOR_CROSS);
         #endif
     }
     //popupMenu_ = new wxMenu;
