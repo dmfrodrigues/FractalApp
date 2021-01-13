@@ -12,6 +12,7 @@ enum{
 FractalPanel::FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *bmp_)
     :wxPanel(p, wxID_ANY, wxDefaultPosition, s, wxBORDER_RAISED),
      parent(p),bmp(bmp_),bmp_buffer(1,1,24){
+    std::cerr << "Constructing FractalPanel" << std::endl;
     ///Initial settings
     /**Cursor*/{
         #ifdef __WXMSW__
@@ -24,6 +25,7 @@ FractalPanel::FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *bmp_)
         if(CreateThread(wxTHREAD_JOINABLE) != wxTHREAD_NO_ERROR){ wxLogError("Could not create main thread"); return; }
         if(GetThread()->Run()              != wxTHREAD_NO_ERROR){ wxLogError("Could not run main thread"   ); return; }
     }
+    std::cerr << "Done constructing FractalPanel" << std::endl;
 }
 
 const FractalBitmap* FractalPanel::GetFractalBitmap() const{
@@ -32,7 +34,9 @@ const FractalBitmap* FractalPanel::GetFractalBitmap() const{
 
 typedef std::chrono::high_resolution_clock hrclock;
 wxThread::ExitCode FractalPanel::Entry(){
+    std::cerr << "Entered FractalPanel thread function" << std::endl;
     /**Create fractal*/{
+        std::lock_guard<std::mutex> lock_bmp(*(std::mutex*)bmp);
         bmp->Create(
             FractalBitmap::ComplexNum(FractalBitmap::complex_t(-0.75L),FractalBitmap::complex_t(0.0L)), //-0.75L,0.0L
             FractalBitmap::complex_t(5.0e-3),
@@ -41,6 +45,7 @@ wxThread::ExitCode FractalPanel::Entry(){
     }
     while(!GetThread()->TestDestroy()){
         {
+            std::lock_guard<std::mutex> lock_bmp(*(std::mutex*)bmp);
             ///Update the fractal & measure time
             auto t1 = hrclock::now();
             bmp->Update();
@@ -54,7 +59,7 @@ wxThread::ExitCode FractalPanel::Entry(){
                 parent->GetInfoPanel()->SetHorizontalSize(bmp->GetHorizontalSize());
             }
             /**Update ready-to-draw bitmap*/{
-                std::lock_guard<std::mutex> lock3(bmpMutex);
+                std::lock_guard<std::mutex> lock_bmp_buffer(bmp_buffer_mutex);
                 bmp_buffer = bmp->GetSubBitmap(wxRect(0, 0, bmp->GetWidth(), bmp->GetHeight()));
             }
 
@@ -62,15 +67,17 @@ wxThread::ExitCode FractalPanel::Entry(){
         ///Update screen
         CallAfter([this]{this->parent->Refresh(false);});
     }
+    std::cerr << "Leaving FractalPanel thread function" << std::endl;
     return (wxThread::ExitCode)0;
 }
 
 void FractalPanel::OnSizeEvent(wxSizeEvent&){
+    std::lock_guard<std::mutex> lock_bmp(*(std::mutex*)bmp);
     bmp->Create(bmp->GetCenter(), bmp->GetStep(), this->GetSize());
 }
 
 void FractalPanel::OnPaintEvent(wxPaintEvent&){
-    std::lock_guard<std::mutex> lock(bmpMutex);
+    std::lock_guard<std::mutex> lock_bmp_buffer(bmp_buffer_mutex);
 
     wxPaintDC dc(this);
     dc.DrawBitmap(bmp_buffer, 0, 0, true);
@@ -82,6 +89,7 @@ void FractalPanel::OnZoomEvent(wxMouseEvent& evt){
         FractalBitmap::complex_t(p.x)*bmp->GetStep(), FractalBitmap::complex_t(-p.y)*bmp->GetStep()
     );
     FractalBitmap::complex_t newstep = bmp->GetStep()*FractalBitmap::complex_t(evt.GetWheelRotation() < 0 ? 3.16227766017L : 1.0L/3.16227766017L);
+    std::lock_guard<std::mutex> lock_bmp(*(std::mutex*)bmp);
     bmp->Create(newcenter, newstep, GetSize());
 }
 

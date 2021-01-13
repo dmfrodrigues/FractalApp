@@ -45,7 +45,7 @@
 
 using namespace std;
 
-class FractalBitmap: public wxBitmap{
+class FractalBitmap: public wxBitmap, public std::mutex{
 public:
     // PUBLIC TYPEDEFS
     typedef long double complex_t;

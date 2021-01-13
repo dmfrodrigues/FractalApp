@@ -11,7 +11,7 @@ private:
     FractalBitmap *bmp;
 
     wxBitmap bmp_buffer;
-    std::mutex bmpMutex;
+    std::mutex bmp_buffer_mutex;
 public:
     FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *bmp);
 
