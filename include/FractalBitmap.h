@@ -45,7 +45,7 @@
 
 using namespace std;
 
-class FractalBitmap: public wxBitmap, public std::mutex{
+class FractalBitmap: public wxBitmap {
 public:
     // PUBLIC TYPEDEFS
     typedef long double complex_t;
@@ -57,6 +57,10 @@ private:
     /// Step between consecutive pixels.
     complex_t  step;
 public:
+    std::mutex data;
+    std::mutex next;
+    std::mutex lowpriority;
+
     /**
      * @brief Construct a new Fractal Bitmap object without arguments.
      */
