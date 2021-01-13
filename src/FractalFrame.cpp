@@ -12,7 +12,7 @@ enum{
     ID_HDPRINTSCREEN  = 2
 };
 ///Constructor
-FractalFrame::FractalFrame(FractalBitmap *bmp):wxFrame(nullptr, wxID_ANY, "Mandelbrot set plotter"){
+FractalFrame::FractalFrame(FractalBitmap *bmp):wxFrame(nullptr, wxID_ANY, "Fractal app"){
     std::cerr << "+FractalFrame::FractalFrame" << std::endl;
     /**Menu*/{
         wxMenu* menuFile      = new wxMenu;
