@@ -4,14 +4,14 @@ FractalBitmap::FractalBitmap():wxBitmap(1,1,24){}
 
 void FractalBitmap::Create(FractalBitmap::ComplexNum center_, FractalBitmap::complex_t step_, wxSize sz_){
     wxBitmap::Create(sz_, 24);
-    /*
+    #ifndef _WIN32
     wxNativePixelData px(*((wxBitmap*)this));
     const unsigned N = GetWidth()*GetHeight();
     wxNativePixelData::Iterator p = px.GetPixels();
     for(unsigned i = 0; i < N; ++i, ++p){
         p.Red() = p.Green() = p.Blue() = 0;
     }
-    */
+    #endif
 
     SetStep(step_);
     SetCenter(center_);
