@@ -13,7 +13,7 @@ enum{
 };
 ///Constructor
 FractalFrame::FractalFrame(FractalBitmap *bmp):wxFrame(nullptr, wxID_ANY, "Mandelbrot set plotter"){
-    std::cerr << "Constructing FractalFrame" << std::endl;
+    // std::cerr << "Constructing FractalFrame" << std::endl;
     /**Menu*/{
         wxMenu* menuFile      = new wxMenu;
         wxMenuItem* menuItem_Printscreen   = new wxMenuItem(menuFile, ID_PRINTSCREEN  , wxT("Save printscreen"));
@@ -39,7 +39,7 @@ FractalFrame::FractalFrame(FractalBitmap *bmp):wxFrame(nullptr, wxID_ANY, "Mande
         sizer->SetSizeHints(this);
         this->SetSizer(sizer);
     }
-    std::cerr << "Done constructing FractalFrame" << std::endl;
+    // std::cerr << "Done constructing FractalFrame" << std::endl;
 }
 
 const FractalPanel* FractalFrame::GetFractalPanel() const{

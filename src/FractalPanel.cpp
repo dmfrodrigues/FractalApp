@@ -12,7 +12,7 @@ enum{
 FractalPanel::FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *bmp_)
     :wxPanel(p, wxID_ANY, wxDefaultPosition, s, wxBORDER_RAISED),
      parent(p),bmp(bmp_),bmp_buffer(1,1,24){
-    std::cerr << "Constructing FractalPanel" << std::endl;
+    // std::cerr << "Constructing FractalPanel" << std::endl;
     ///Initial settings
     /**Cursor*/{
         #ifdef __WXMSW__
@@ -25,7 +25,7 @@ FractalPanel::FractalPanel(FractalFrame* p, wxSize s, FractalBitmap *bmp_)
         if(CreateThread(wxTHREAD_JOINABLE) != wxTHREAD_NO_ERROR){ wxLogError("Could not create main thread"); return; }
         if(GetThread()->Run()              != wxTHREAD_NO_ERROR){ wxLogError("Could not run main thread"   ); return; }
     }
-    std::cerr << "Done constructing FractalPanel" << std::endl;
+    // std::cerr << "Done constructing FractalPanel" << std::endl;
 }
 
 const FractalBitmap* FractalPanel::GetFractalBitmap() const{
@@ -34,7 +34,7 @@ const FractalBitmap* FractalPanel::GetFractalBitmap() const{
 
 typedef std::chrono::high_resolution_clock hrclock;
 wxThread::ExitCode FractalPanel::Entry(){
-    std::cerr << "Entered FractalPanel thread function" << std::endl;
+    // std::cerr << "Entered FractalPanel thread function" << std::endl;
     /**Create fractal*/{
         bmp->lowpriority.lock(); bmp->next.lock(); bmp->data.lock(); bmp->next.unlock();
         bmp->Create(
@@ -68,7 +68,7 @@ wxThread::ExitCode FractalPanel::Entry(){
         ///Update screen
         CallAfter([this]{this->parent->Refresh(false);});
     }
-    std::cerr << "Leaving FractalPanel thread function" << std::endl;
+    // std::cerr << "Leaving FractalPanel thread function" << std::endl;
     return (wxThread::ExitCode)0;
 }
 
