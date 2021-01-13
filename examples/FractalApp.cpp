@@ -28,7 +28,7 @@ private:
     FractalBitmap *f;
 public:
     virtual bool OnInit(){
-        // std::cerr << "Initializing FractalApp" << std::endl;
+        std::cerr << "+FractalApp::OnInit" << std::endl;
         wxInitAllImageHandlers();
         f = new TestBitmap();
         fractalFrame = new FractalFrame(f);
@@ -37,7 +37,7 @@ public:
         return true;
     }
     int OnExit(){
-        std::cout << "Exiting FractalApp" << std::endl;
+        std::cout << "-FractalApp::OnInit" << std::endl;
         delete f;
         return wxApp::OnExit();
     }
