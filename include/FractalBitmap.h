@@ -34,10 +34,14 @@
 #pragma GCC diagnostic ignored "-Wconversion"
 #pragma GCC diagnostic ignored "-Wswitch-default"
 #pragma GCC diagnostic ignored "-Wredundant-decls"
-#pragma warning(push)
-#pragma warning(disable : 4996)
+#ifdef _MSC_VER
+    #pragma warning(push)
+    #pragma warning(disable : 4996)
+#endif
 #include <wx/wx.h>
-#pragma warning(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
 #include <wx/rawbmp.h>
 #pragma GCC diagnostic pop
 
