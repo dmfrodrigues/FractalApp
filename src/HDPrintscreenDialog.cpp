@@ -53,12 +53,10 @@ void HDPrintscreenDialog::OnOK(wxCommandEvent&){
     *sz     = wxSize(std::stoi(SzXCtrl->GetValue().ToStdString()),
                      std::stoi(SzYCtrl->GetValue().ToStdString()));
     *numIt  =        ato<FractalBitmap::iter_t>(ItCtrl->GetValue().ToStdString());
-    this->SetReturnCode(wxID_OK);
-    this->Destroy();
+    this->EndModal(wxID_OK);
 }
 void HDPrintscreenDialog::OnCancel(wxCommandEvent&){
-    this->SetReturnCode(wxID_CANCEL);
-    this->Destroy();
+    this->EndModal(wxID_CANCEL);
 }
 
 wxBEGIN_EVENT_TABLE(HDPrintscreenDialog, wxDialog)

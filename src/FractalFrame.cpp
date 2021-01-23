@@ -50,26 +50,16 @@ InfoPanel* FractalFrame::GetInfoPanel(){
     return ipanel;
 }
 
-void NewImageName(const char* format, char* name){
-    const unsigned N = 100000;
-    for(unsigned i = 0; i < N; ++i){
-        sprintf(name, format, i);
-        if(!std::ifstream(name)) return;
-    }
-    throw std::logic_error("no available image names");
-}
 void FractalFrame::OnPrintscreenEvent(wxCommandEvent &){
-    char new_path[256];
-    NewImageName("./Printscreens/Image_%04d.png", new_path);
-    {
-        if(fpanel->GetFractalBitmap()->SaveFile(new_path, wxBITMAP_TYPE_PNG))
-            wxLogMessage("Printscreen saved as " + wxString(new_path));
-    }
+    wxFileDialog saveFileDialog(this, ("Save screenshot as"), "", "",
+        "PNG files (*.png)|*.png", wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+    if(saveFileDialog.ShowModal() == wxID_CANCEL) return;
+    std::string path = saveFileDialog.GetPath().ToStdString();
+
+    if(fpanel->GetFractalBitmap()->SaveFile(path, wxBITMAP_TYPE_PNG))
+        wxLogMessage("Printscreen saved as " + wxString(path) + ".png");
 }
 void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &){
-    char new_path[256];
-    NewImageName("./Printscreens/Image_%04d.png", new_path);
-
     FractalBitmap *g;
     FractalBitmap::iter_t num;
     {
@@ -85,12 +75,17 @@ void FractalFrame::OnHDPrintscreenEvent(wxCommandEvent &){
         g->Create(center, step, sz);
     }
 
+    wxFileDialog saveFileDialog(this, ("Save HD screenshot as"), "", "",
+        "PNG files (*.png)|*.png", wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+    if(saveFileDialog.ShowModal() == wxID_CANCEL) return;
+    std::string path = saveFileDialog.GetPath().ToStdString();
+
     num /= g->GetCyclesPerRun();
     while(--num){
         g->Update();
     }
-    if(g->SaveFile(new_path, wxBITMAP_TYPE_PNG))
-        wxLogMessage("Printscreen saved as " + wxString(new_path));
+    if(g->SaveFile(path, wxBITMAP_TYPE_PNG))
+        wxLogMessage("Printscreen saved as " + wxString(path));
 }
 
 void FractalFrame::OnCloseEvent(wxCloseEvent&){
