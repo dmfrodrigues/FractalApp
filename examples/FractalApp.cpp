@@ -43,4 +43,8 @@ public:
     }
 };
 
+#ifdef _MSC_VER
+    #undef main
+#endif
+
 wxIMPLEMENT_APP(FractalApp);
